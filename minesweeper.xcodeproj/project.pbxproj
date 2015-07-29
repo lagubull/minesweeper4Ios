@@ -7,73 +7,74 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		30C5F6391977EB1100561525 /* VersusGameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C5F6321977EB1100561525 /* VersusGameCell.m */; };
-		30C5F63A1977EB1100561525 /* VersusGameManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C5F6341977EB1100561525 /* VersusGameManager.m */; };
-		30C5F63C1977EB1100561525 /* VersusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C5F6381977EB1100561525 /* VersusViewController.m */; };
-		3BD483901B694C620026BDBD /* VersusGameTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD4838F1B694C620026BDBD /* VersusGameTableViewController.m */; };
+		3BD483C71B6954520026BDBD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483981B6954520026BDBD /* AppDelegate.m */; };
+		3BD483C81B6954520026BDBD /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD4839C1B6954520026BDBD /* DBManager.m */; };
+		3BD483C91B6954520026BDBD /* VersusGameManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD4839F1B6954520026BDBD /* VersusGameManager.m */; };
+		3BD483CA1B6954520026BDBD /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483A41B6954520026BDBD /* Game.m */; };
+		3BD483CB1B6954520026BDBD /* VersusGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483A61B6954520026BDBD /* VersusGame.m */; };
+		3BD483CC1B6954520026BDBD /* Actions-flag-blue-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD483A81B6954520026BDBD /* Actions-flag-blue-icon.png */; };
+		3BD483CD1B6954520026BDBD /* Actions-flag-red-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD483A91B6954520026BDBD /* Actions-flag-red-icon.png */; };
+		3BD483CE1B6954520026BDBD /* bmdb.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 3BD483AA1B6954520026BDBD /* bmdb.sqlite */; };
+		3BD483CF1B6954520026BDBD /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD483AB1B6954520026BDBD /* Default-568h@2x.png */; };
+		3BD483D01B6954520026BDBD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD483AC1B6954520026BDBD /* Default.png */; };
+		3BD483D11B6954520026BDBD /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD483AD1B6954520026BDBD /* Default@2x.png */; };
+		3BD483D21B6954520026BDBD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3BD483AE1B6954520026BDBD /* InfoPlist.strings */; };
+		3BD483D31B6954520026BDBD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3BD483B01B6954520026BDBD /* Localizable.strings */; };
+		3BD483D41B6954520026BDBD /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 3BD483B11B6954520026BDBD /* menu.png */; };
+		3BD483D51B6954520026BDBD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483B31B6954520026BDBD /* main.m */; };
+		3BD483D61B6954520026BDBD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BD483B41B6954520026BDBD /* MainStoryboard.storyboard */; };
+		3BD483D71B6954520026BDBD /* minesweeper-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD483B51B6954520026BDBD /* minesweeper-Info.plist */; };
+		3BD483D81B6954520026BDBD /* Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483B91B6954520026BDBD /* Tools.m */; };
+		3BD483D91B6954520026BDBD /* VersusGameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483BE1B6954520026BDBD /* VersusGameCell.m */; };
+		3BD483DA1B6954520026BDBD /* VersusGameTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483C01B6954520026BDBD /* VersusGameTableViewController.m */; };
+		3BD483DB1B6954520026BDBD /* VersusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483C21B6954520026BDBD /* VersusViewController.m */; };
+		3BD483DC1B6954520026BDBD /* MATCGlossyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483C61B6954520026BDBD /* MATCGlossyButton.m */; };
 		84C486D7182A4F9900C96EF5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C486D6182A4F9900C96EF5 /* UIKit.framework */; };
 		84C486D9182A4F9900C96EF5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C486D8182A4F9900C96EF5 /* Foundation.framework */; };
 		84C486DB182A4F9900C96EF5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C486DA182A4F9900C96EF5 /* CoreGraphics.framework */; };
-		84C486E1182A4F9900C96EF5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84C486DF182A4F9900C96EF5 /* InfoPlist.strings */; };
-		84C486E3182A4F9900C96EF5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C486E2182A4F9900C96EF5 /* main.m */; };
-		84C486E7182A4F9900C96EF5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C486E6182A4F9900C96EF5 /* AppDelegate.m */; };
-		84C486E9182A4F9900C96EF5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C486E8182A4F9900C96EF5 /* Default.png */; };
-		84C486EB182A4F9900C96EF5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C486EA182A4F9900C96EF5 /* Default@2x.png */; };
-		84C486ED182A4F9900C96EF5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C486EC182A4F9900C96EF5 /* Default-568h@2x.png */; };
-		84C486F8182A4FFD00C96EF5 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84C486F3182A4FFD00C96EF5 /* MainStoryboard.storyboard */; };
-		84C486F9182A4FFD00C96EF5 /* VersusGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C486F5182A4FFD00C96EF5 /* VersusGame.m */; };
-		84C486FA182A4FFD00C96EF5 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C486F7182A4FFD00C96EF5 /* Game.m */; };
-		84C48706182A508600C96EF5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84C486FB182A508600C96EF5 /* Localizable.strings */; };
-		84C48707182A508600C96EF5 /* Actions-flag-blue-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C486FC182A508600C96EF5 /* Actions-flag-blue-icon.png */; };
-		84C48708182A508600C96EF5 /* Actions-flag-red-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C486FD182A508600C96EF5 /* Actions-flag-red-icon.png */; };
-		84C48709182A508600C96EF5 /* bmdb.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 84C486FE182A508600C96EF5 /* bmdb.sqlite */; };
-		84C4870A182A508600C96EF5 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C48700182A508600C96EF5 /* DBManager.m */; };
-		84C4870B182A508600C96EF5 /* MATCGlossyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C48702182A508600C96EF5 /* MATCGlossyButton.m */; };
-		84C4870C182A508600C96EF5 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C48703182A508600C96EF5 /* menu.png */; };
-		84C4870D182A508600C96EF5 /* Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C48705182A508600C96EF5 /* Tools.m */; };
 		84C48715182A644E00C96EF5 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C48714182A644E00C96EF5 /* libsqlite3.0.dylib */; };
 		84C48723182A67DE00C96EF5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C48722182A67DE00C96EF5 /* QuartzCore.framework */; };
 		84C48725182A67F500C96EF5 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C48724182A67F500C96EF5 /* CoreMotion.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		30C5F6311977EB1100561525 /* VersusGameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersusGameCell.h; sourceTree = "<group>"; };
-		30C5F6321977EB1100561525 /* VersusGameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersusGameCell.m; sourceTree = "<group>"; };
-		30C5F6331977EB1100561525 /* VersusGameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersusGameManager.h; sourceTree = "<group>"; };
-		30C5F6341977EB1100561525 /* VersusGameManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersusGameManager.m; sourceTree = "<group>"; };
-		30C5F6351977EB1100561525 /* VersusGameTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersusGameTableViewController.h; sourceTree = "<group>"; };
-		30C5F6371977EB1100561525 /* VersusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersusViewController.h; sourceTree = "<group>"; };
-		30C5F6381977EB1100561525 /* VersusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersusViewController.m; sourceTree = "<group>"; };
-		3BD4838F1B694C620026BDBD /* VersusGameTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersusGameTableViewController.m; sourceTree = "<group>"; };
+		3BD483971B6954520026BDBD /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		3BD483981B6954520026BDBD /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		3BD4839B1B6954520026BDBD /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
+		3BD4839C1B6954520026BDBD /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		3BD4839E1B6954520026BDBD /* VersusGameManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersusGameManager.h; sourceTree = "<group>"; };
+		3BD4839F1B6954520026BDBD /* VersusGameManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersusGameManager.m; sourceTree = "<group>"; };
+		3BD483A31B6954520026BDBD /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		3BD483A41B6954520026BDBD /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Game.m; sourceTree = "<group>"; };
+		3BD483A51B6954520026BDBD /* VersusGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersusGame.h; sourceTree = "<group>"; };
+		3BD483A61B6954520026BDBD /* VersusGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersusGame.m; sourceTree = "<group>"; };
+		3BD483A81B6954520026BDBD /* Actions-flag-blue-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Actions-flag-blue-icon.png"; sourceTree = "<group>"; };
+		3BD483A91B6954520026BDBD /* Actions-flag-red-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Actions-flag-red-icon.png"; sourceTree = "<group>"; };
+		3BD483AA1B6954520026BDBD /* bmdb.sqlite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bmdb.sqlite; sourceTree = "<group>"; };
+		3BD483AB1B6954520026BDBD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		3BD483AC1B6954520026BDBD /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		3BD483AD1B6954520026BDBD /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		3BD483AF1B6954520026BDBD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3BD483B01B6954520026BDBD /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		3BD483B11B6954520026BDBD /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		3BD483B31B6954520026BDBD /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3BD483B41B6954520026BDBD /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
+		3BD483B51B6954520026BDBD /* minesweeper-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "minesweeper-Info.plist"; sourceTree = "<group>"; };
+		3BD483B61B6954520026BDBD /* minesweeper-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "minesweeper-Prefix.pch"; sourceTree = "<group>"; };
+		3BD483B81B6954520026BDBD /* Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tools.h; sourceTree = "<group>"; };
+		3BD483B91B6954520026BDBD /* Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tools.m; sourceTree = "<group>"; };
+		3BD483BD1B6954520026BDBD /* VersusGameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersusGameCell.h; sourceTree = "<group>"; };
+		3BD483BE1B6954520026BDBD /* VersusGameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersusGameCell.m; sourceTree = "<group>"; };
+		3BD483BF1B6954520026BDBD /* VersusGameTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersusGameTableViewController.h; sourceTree = "<group>"; };
+		3BD483C01B6954520026BDBD /* VersusGameTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersusGameTableViewController.m; sourceTree = "<group>"; };
+		3BD483C11B6954520026BDBD /* VersusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersusViewController.h; sourceTree = "<group>"; };
+		3BD483C21B6954520026BDBD /* VersusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersusViewController.m; sourceTree = "<group>"; };
+		3BD483C51B6954520026BDBD /* MATCGlossyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MATCGlossyButton.h; sourceTree = "<group>"; };
+		3BD483C61B6954520026BDBD /* MATCGlossyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MATCGlossyButton.m; sourceTree = "<group>"; };
 		84C486D3182A4F9900C96EF5 /* minesweeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = minesweeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C486D6182A4F9900C96EF5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84C486D8182A4F9900C96EF5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84C486DA182A4F9900C96EF5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		84C486DE182A4F9900C96EF5 /* minesweeper-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "minesweeper-Info.plist"; sourceTree = "<group>"; };
-		84C486E0182A4F9900C96EF5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		84C486E2182A4F9900C96EF5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		84C486E4182A4F9900C96EF5 /* minesweeper-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "minesweeper-Prefix.pch"; sourceTree = "<group>"; };
-		84C486E5182A4F9900C96EF5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		84C486E6182A4F9900C96EF5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		84C486E8182A4F9900C96EF5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		84C486EA182A4F9900C96EF5 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		84C486EC182A4F9900C96EF5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		84C486F3182A4FFD00C96EF5 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
-		84C486F4182A4FFD00C96EF5 /* VersusGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersusGame.h; sourceTree = "<group>"; };
-		84C486F5182A4FFD00C96EF5 /* VersusGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersusGame.m; sourceTree = "<group>"; };
-		84C486F6182A4FFD00C96EF5 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
-		84C486F7182A4FFD00C96EF5 /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Game.m; sourceTree = "<group>"; };
-		84C486FB182A508600C96EF5 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		84C486FC182A508600C96EF5 /* Actions-flag-blue-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Actions-flag-blue-icon.png"; sourceTree = "<group>"; };
-		84C486FD182A508600C96EF5 /* Actions-flag-red-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Actions-flag-red-icon.png"; sourceTree = "<group>"; };
-		84C486FE182A508600C96EF5 /* bmdb.sqlite */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bmdb.sqlite; sourceTree = "<group>"; };
-		84C486FF182A508600C96EF5 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
-		84C48700182A508600C96EF5 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
-		84C48701182A508600C96EF5 /* MATCGlossyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MATCGlossyButton.h; sourceTree = "<group>"; };
-		84C48702182A508600C96EF5 /* MATCGlossyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MATCGlossyButton.m; sourceTree = "<group>"; };
-		84C48703182A508600C96EF5 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
-		84C48704182A508600C96EF5 /* Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tools.h; sourceTree = "<group>"; };
-		84C48705182A508600C96EF5 /* Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tools.m; sourceTree = "<group>"; };
 		84C48714182A644E00C96EF5 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		84C48722182A67DE00C96EF5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		84C48724182A67F500C96EF5 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -96,12 +97,154 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3BD483961B6954520026BDBD /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				3BD483971B6954520026BDBD /* AppDelegate.h */,
+				3BD483981B6954520026BDBD /* AppDelegate.m */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		3BD483991B6954520026BDBD /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				3BD4839A1B6954520026BDBD /* DB */,
+				3BD4839D1B6954520026BDBD /* VersusGame */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		3BD4839A1B6954520026BDBD /* DB */ = {
+			isa = PBXGroup;
+			children = (
+				3BD4839B1B6954520026BDBD /* DBManager.h */,
+				3BD4839C1B6954520026BDBD /* DBManager.m */,
+			);
+			path = DB;
+			sourceTree = "<group>";
+		};
+		3BD4839D1B6954520026BDBD /* VersusGame */ = {
+			isa = PBXGroup;
+			children = (
+				3BD4839E1B6954520026BDBD /* VersusGameManager.h */,
+				3BD4839F1B6954520026BDBD /* VersusGameManager.m */,
+			);
+			path = VersusGame;
+			sourceTree = "<group>";
+		};
+		3BD483A01B6954520026BDBD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3BD483A11B6954520026BDBD /* Non-Persistent */,
+				3BD483A21B6954520026BDBD /* Persistent */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3BD483A11B6954520026BDBD /* Non-Persistent */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Non-Persistent";
+			sourceTree = "<group>";
+		};
+		3BD483A21B6954520026BDBD /* Persistent */ = {
+			isa = PBXGroup;
+			children = (
+				3BD483A31B6954520026BDBD /* Game.h */,
+				3BD483A41B6954520026BDBD /* Game.m */,
+				3BD483A51B6954520026BDBD /* VersusGame.h */,
+				3BD483A61B6954520026BDBD /* VersusGame.m */,
+			);
+			path = Persistent;
+			sourceTree = "<group>";
+		};
+		3BD483A71B6954520026BDBD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3BD483A81B6954520026BDBD /* Actions-flag-blue-icon.png */,
+				3BD483A91B6954520026BDBD /* Actions-flag-red-icon.png */,
+				3BD483AA1B6954520026BDBD /* bmdb.sqlite */,
+				3BD483AB1B6954520026BDBD /* Default-568h@2x.png */,
+				3BD483AC1B6954520026BDBD /* Default.png */,
+				3BD483AD1B6954520026BDBD /* Default@2x.png */,
+				3BD483AE1B6954520026BDBD /* InfoPlist.strings */,
+				3BD483B01B6954520026BDBD /* Localizable.strings */,
+				3BD483B11B6954520026BDBD /* menu.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		3BD483B21B6954520026BDBD /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				3BD483B31B6954520026BDBD /* main.m */,
+				3BD483B41B6954520026BDBD /* MainStoryboard.storyboard */,
+				3BD483B51B6954520026BDBD /* minesweeper-Info.plist */,
+				3BD483B61B6954520026BDBD /* minesweeper-Prefix.pch */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		3BD483B71B6954520026BDBD /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				3BD483B81B6954520026BDBD /* Tools.h */,
+				3BD483B91B6954520026BDBD /* Tools.m */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		3BD483BA1B6954520026BDBD /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				3BD483BB1B6954520026BDBD /* VersusGame */,
+				3BD483C11B6954520026BDBD /* VersusViewController.h */,
+				3BD483C21B6954520026BDBD /* VersusViewController.m */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		3BD483BB1B6954520026BDBD /* VersusGame */ = {
+			isa = PBXGroup;
+			children = (
+				3BD483BC1B6954520026BDBD /* Cell */,
+				3BD483BF1B6954520026BDBD /* VersusGameTableViewController.h */,
+				3BD483C01B6954520026BDBD /* VersusGameTableViewController.m */,
+			);
+			path = VersusGame;
+			sourceTree = "<group>";
+		};
+		3BD483BC1B6954520026BDBD /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				3BD483BD1B6954520026BDBD /* VersusGameCell.h */,
+				3BD483BE1B6954520026BDBD /* VersusGameCell.m */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		3BD483C31B6954520026BDBD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3BD483C41B6954520026BDBD /* GlossyButton */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3BD483C41B6954520026BDBD /* GlossyButton */ = {
+			isa = PBXGroup;
+			children = (
+				3BD483C51B6954520026BDBD /* MATCGlossyButton.h */,
+				3BD483C61B6954520026BDBD /* MATCGlossyButton.m */,
+			);
+			path = GlossyButton;
+			sourceTree = "<group>";
+		};
 		84C486CA182A4F9900C96EF5 = {
 			isa = PBXGroup;
 			children = (
-				84C48724182A67F500C96EF5 /* CoreMotion.framework */,
-				84C48722182A67DE00C96EF5 /* QuartzCore.framework */,
-				84C48714182A644E00C96EF5 /* libsqlite3.0.dylib */,
 				84C486DC182A4F9900C96EF5 /* minesweeper */,
 				84C486D5182A4F9900C96EF5 /* Frameworks */,
 				84C486D4182A4F9900C96EF5 /* Products */,
@@ -119,6 +262,9 @@
 		84C486D5182A4F9900C96EF5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84C48724182A67F500C96EF5 /* CoreMotion.framework */,
+				84C48722182A67DE00C96EF5 /* QuartzCore.framework */,
+				84C48714182A644E00C96EF5 /* libsqlite3.0.dylib */,
 				84C486D6182A4F9900C96EF5 /* UIKit.framework */,
 				84C486D8182A4F9900C96EF5 /* Foundation.framework */,
 				84C486DA182A4F9900C96EF5 /* CoreGraphics.framework */,
@@ -129,49 +275,16 @@
 		84C486DC182A4F9900C96EF5 /* minesweeper */ = {
 			isa = PBXGroup;
 			children = (
-				3BD4838F1B694C620026BDBD /* VersusGameTableViewController.m */,
-				84C486FB182A508600C96EF5 /* Localizable.strings */,
-				84C486FC182A508600C96EF5 /* Actions-flag-blue-icon.png */,
-				84C486FD182A508600C96EF5 /* Actions-flag-red-icon.png */,
-				84C486FE182A508600C96EF5 /* bmdb.sqlite */,
-				84C486FF182A508600C96EF5 /* DBManager.h */,
-				84C48700182A508600C96EF5 /* DBManager.m */,
-				84C48701182A508600C96EF5 /* MATCGlossyButton.h */,
-				84C48702182A508600C96EF5 /* MATCGlossyButton.m */,
-				84C48703182A508600C96EF5 /* menu.png */,
-				84C48704182A508600C96EF5 /* Tools.h */,
-				84C48705182A508600C96EF5 /* Tools.m */,
-				84C486F3182A4FFD00C96EF5 /* MainStoryboard.storyboard */,
-				84C486F4182A4FFD00C96EF5 /* VersusGame.h */,
-				84C486F5182A4FFD00C96EF5 /* VersusGame.m */,
-				30C5F6311977EB1100561525 /* VersusGameCell.h */,
-				30C5F6321977EB1100561525 /* VersusGameCell.m */,
-				30C5F6331977EB1100561525 /* VersusGameManager.h */,
-				30C5F6341977EB1100561525 /* VersusGameManager.m */,
-				30C5F6351977EB1100561525 /* VersusGameTableViewController.h */,
-				30C5F6371977EB1100561525 /* VersusViewController.h */,
-				30C5F6381977EB1100561525 /* VersusViewController.m */,
-				84C486F6182A4FFD00C96EF5 /* Game.h */,
-				84C486F7182A4FFD00C96EF5 /* Game.m */,
-				84C486E5182A4F9900C96EF5 /* AppDelegate.h */,
-				84C486E6182A4F9900C96EF5 /* AppDelegate.m */,
-				84C486DD182A4F9900C96EF5 /* Supporting Files */,
+				3BD483961B6954520026BDBD /* AppDelegate */,
+				3BD483991B6954520026BDBD /* Managers */,
+				3BD483A01B6954520026BDBD /* Model */,
+				3BD483A71B6954520026BDBD /* Resources */,
+				3BD483B21B6954520026BDBD /* SupportingFiles */,
+				3BD483B71B6954520026BDBD /* Utilities */,
+				3BD483BA1B6954520026BDBD /* ViewControllers */,
+				3BD483C31B6954520026BDBD /* Views */,
 			);
 			path = minesweeper;
-			sourceTree = "<group>";
-		};
-		84C486DD182A4F9900C96EF5 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				84C486DE182A4F9900C96EF5 /* minesweeper-Info.plist */,
-				84C486DF182A4F9900C96EF5 /* InfoPlist.strings */,
-				84C486E2182A4F9900C96EF5 /* main.m */,
-				84C486E4182A4F9900C96EF5 /* minesweeper-Prefix.pch */,
-				84C486E8182A4F9900C96EF5 /* Default.png */,
-				84C486EA182A4F9900C96EF5 /* Default@2x.png */,
-				84C486EC182A4F9900C96EF5 /* Default-568h@2x.png */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,16 +337,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84C486E1182A4F9900C96EF5 /* InfoPlist.strings in Resources */,
-				84C486E9182A4F9900C96EF5 /* Default.png in Resources */,
-				84C486EB182A4F9900C96EF5 /* Default@2x.png in Resources */,
-				84C486ED182A4F9900C96EF5 /* Default-568h@2x.png in Resources */,
-				84C486F8182A4FFD00C96EF5 /* MainStoryboard.storyboard in Resources */,
-				84C48706182A508600C96EF5 /* Localizable.strings in Resources */,
-				84C48707182A508600C96EF5 /* Actions-flag-blue-icon.png in Resources */,
-				84C48708182A508600C96EF5 /* Actions-flag-red-icon.png in Resources */,
-				84C48709182A508600C96EF5 /* bmdb.sqlite in Resources */,
-				84C4870C182A508600C96EF5 /* menu.png in Resources */,
+				3BD483D11B6954520026BDBD /* Default@2x.png in Resources */,
+				3BD483D21B6954520026BDBD /* InfoPlist.strings in Resources */,
+				3BD483D41B6954520026BDBD /* menu.png in Resources */,
+				3BD483CD1B6954520026BDBD /* Actions-flag-red-icon.png in Resources */,
+				3BD483CF1B6954520026BDBD /* Default-568h@2x.png in Resources */,
+				3BD483CC1B6954520026BDBD /* Actions-flag-blue-icon.png in Resources */,
+				3BD483D61B6954520026BDBD /* MainStoryboard.storyboard in Resources */,
+				3BD483D31B6954520026BDBD /* Localizable.strings in Resources */,
+				3BD483CE1B6954520026BDBD /* bmdb.sqlite in Resources */,
+				3BD483D71B6954520026BDBD /* minesweeper-Info.plist in Resources */,
+				3BD483D01B6954520026BDBD /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,27 +358,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				30C5F63C1977EB1100561525 /* VersusViewController.m in Sources */,
-				84C486E3182A4F9900C96EF5 /* main.m in Sources */,
-				84C486E7182A4F9900C96EF5 /* AppDelegate.m in Sources */,
-				84C486F9182A4FFD00C96EF5 /* VersusGame.m in Sources */,
-				84C486FA182A4FFD00C96EF5 /* Game.m in Sources */,
-				84C4870A182A508600C96EF5 /* DBManager.m in Sources */,
-				30C5F6391977EB1100561525 /* VersusGameCell.m in Sources */,
-				3BD483901B694C620026BDBD /* VersusGameTableViewController.m in Sources */,
-				84C4870B182A508600C96EF5 /* MATCGlossyButton.m in Sources */,
-				84C4870D182A508600C96EF5 /* Tools.m in Sources */,
-				30C5F63A1977EB1100561525 /* VersusGameManager.m in Sources */,
+				3BD483DC1B6954520026BDBD /* MATCGlossyButton.m in Sources */,
+				3BD483DB1B6954520026BDBD /* VersusViewController.m in Sources */,
+				3BD483D81B6954520026BDBD /* Tools.m in Sources */,
+				3BD483CB1B6954520026BDBD /* VersusGame.m in Sources */,
+				3BD483C71B6954520026BDBD /* AppDelegate.m in Sources */,
+				3BD483C81B6954520026BDBD /* DBManager.m in Sources */,
+				3BD483C91B6954520026BDBD /* VersusGameManager.m in Sources */,
+				3BD483D91B6954520026BDBD /* VersusGameCell.m in Sources */,
+				3BD483D51B6954520026BDBD /* main.m in Sources */,
+				3BD483DA1B6954520026BDBD /* VersusGameTableViewController.m in Sources */,
+				3BD483CA1B6954520026BDBD /* Game.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		84C486DF182A4F9900C96EF5 /* InfoPlist.strings */ = {
+		3BD483AE1B6954520026BDBD /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				84C486E0182A4F9900C96EF5 /* en */,
+				3BD483AF1B6954520026BDBD /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -336,8 +450,8 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "minesweeper/minesweeper-Prefix.pch";
-				INFOPLIST_FILE = "minesweeper/minesweeper-Info.plist";
+				GCC_PREFIX_HEADER = "minesweeper/SupportingFiles/minesweeper-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/minesweeper/SupportingFiles/minesweeper-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -351,8 +465,8 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "minesweeper/minesweeper-Prefix.pch";
-				INFOPLIST_FILE = "minesweeper/minesweeper-Info.plist";
+				GCC_PREFIX_HEADER = "minesweeper/SupportingFiles/minesweeper-Prefix.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/minesweeper/SupportingFiles/minesweeper-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

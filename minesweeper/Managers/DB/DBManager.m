@@ -2,7 +2,7 @@
 //  DBManager.m
 //  DBTest
 //
-//  Created by admin on 24/04/13.
+//  Created by jlagunas on 24/04/13.
 //  Copyright (c) 2013 Jlaguna. All rights reserved.
 //
 
@@ -45,11 +45,10 @@ NSString *DATE = @"DATE";
 NSString *NAME_P2 = @"NAME_P2";
 NSString *LAST_PLAYED_CELL_P2 = @"LAST_PLAYED_CELL_P2";
 
+#pragma mark - Init
 
--(id) init
+- (id)init
 {
-    
-        
     DATABASE_CREATE_VERSUS = [[[[[[[[[[[[[[NSString stringWithFormat: @"CREATE TABLE %@ ( ",DATABASE_TABLE_VERSUS ]
     stringByAppendingString: [NSString stringWithFormat: @"%@ INTEGER PRIMARY KEY,",ID] ]
     stringByAppendingString: [NSString stringWithFormat: @"%@ INTEGER,",NUM_MINES] ]
@@ -68,7 +67,9 @@ NSString *LAST_PLAYED_CELL_P2 = @"LAST_PLAYED_CELL_P2";
     return self;
 }
 
--(BOOL) open
+#pragma mark - Open
+
+- (BOOL)open
 {
     AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
     @try
@@ -86,18 +87,23 @@ NSString *LAST_PLAYED_CELL_P2 = @"LAST_PLAYED_CELL_P2";
     }
 }
 
--(void) close
+#pragma mark - Close
+
+- (void)close
 {
     @try
     {
         sqlite3_close(dataBase);
     }
-    @catch (NSException *exception) {
+    @catch (NSException *exception)
+    {
         NSLog(@"ERROR closing DB: %@",exception);
     }
 }
 
--(void) createsDB
+#pragma mark - CreatesDB
+
+- (void)createsDB
 {
     
     @try {
@@ -118,7 +124,7 @@ NSString *LAST_PLAYED_CELL_P2 = @"LAST_PLAYED_CELL_P2";
 }
 
 /* Prepares a SQL statement */
--(sqlite3_stmt *) prepareSentence: (NSString *) SQLSentence
+- (sqlite3_stmt *) prepareSentence: (NSString *) SQLSentence
 {
     sqlite3_stmt * sentence;
     int result = sqlite3_prepare_v2(dataBase, [SQLSentence UTF8String], -1,&sentence, NULL);
@@ -139,7 +145,7 @@ NSString *LAST_PLAYED_CELL_P2 = @"LAST_PLAYED_CELL_P2";
 }
 
 /* Executes a prepared statement */
--(void) executeSentence: (sqlite3_stmt *) sentence
+- (void) executeSentence: (sqlite3_stmt *) sentence
 {
     if (sqlite3_step(sentence) != SQLITE_DONE)
     {
@@ -159,26 +165,27 @@ NSString *LAST_PLAYED_CELL_P2 = @"LAST_PLAYED_CELL_P2";
 }
 
 /* Executes ands prepares a SQL statement */
--(void)  executeSimpleSentence: (NSString *) SQLSentence
+- (void)executeSimpleSentence:(NSString *) SQLSentence
 {
     sqlite3_stmt * sentence = [self prepareSentence:SQLSentence];
     [self executeSentence:sentence];
 }
 
 
--(void) upgrade: (int) oldVersion newVersion:(int) newVersion
+- (void) upgrade:(int)oldVersion newVersion:(int)newVersion
 {
    NSLog(@"Upgrading database from version %d to %d, which will destroy all old data",oldVersion,newVersion);
+   
     @try
     {
-        
         [self open];
         // drop sentence
         [self executeSimpleSentence: [@"DROP TABLE IF EXISTS " stringByAppendingString: DATABASE_TABLE_VERSUS]];
     
         [self createsDB];
     }
-    @catch (NSException *exception) {
+    @catch (NSException *exception)
+    {
         NSLog(@"Error upgrading the DB");
     }
     @finally {
@@ -199,13 +206,12 @@ NSString *LAST_PLAYED_CELL_P2 = @"LAST_PLAYED_CELL_P2";
  * @param VersusGame
  */
 
--(void) createVersusGame:(VersusGame *) versusGame
+- (void)createVersusGame:(VersusGame *)versusGame
 {
     NSString * sentence =  [[@"INSERT INTO " stringByAppendingString:DATABASE_TABLE_VERSUS]
                 stringByAppendingString: @" (%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@,%@) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"];
     @try
     {
-        
         [self open];
         sentence = [NSString stringWithFormat: sentence,NUM_MINES,NUM_ROWS,NUM_COLUMNS
                     ,VISIBLE,MINES,NAME_P1,NAME_P2,LAST_PLAYED_CELL_P1,LAST_PLAYED_CELL_P2,PLAYER,DATE,VICTORY];
@@ -227,13 +233,14 @@ NSString *LAST_PLAYED_CELL_P2 = @"LAST_PLAYED_CELL_P2";
     
         [self executeSentence:sql];
     }
-    @catch (NSException *exception) {
+    @catch (NSException *exception)
+    {
         NSLog(@"Error creating Versus Game");
     }
-    @finally {
+    @finally
+    {
         [self close];
     }
-
 }
 
 /**
@@ -241,7 +248,7 @@ NSString *LAST_PLAYED_CELL_P2 = @"LAST_PLAYED_CELL_P2";
  *@return NSMutableArray 
 */
 
--(NSMutableArray *)  getRestorableVersusGame
+- (NSMutableArray *)getRestorableVersusGame
 {
     NSMutableArray *games = [[NSMutableArray alloc] init];
     int count = 1;
@@ -253,7 +260,7 @@ NSString *LAST_PLAYED_CELL_P2 = @"LAST_PLAYED_CELL_P2";
         {
             sqlite3_stmt * sentence = [self prepareSentence: selectGame];
             
-            while ( sqlite3_step(sentence) == SQLITE_ROW )//|| sqlite3_step(sentence) == SQLITE_DONE )
+            while ( sqlite3_step(sentence) == SQLITE_ROW )
             {
                 if (count > RESTORABLE_GAMES)
                     break;
@@ -306,7 +313,7 @@ NSString *LAST_PLAYED_CELL_P2 = @"LAST_PLAYED_CELL_P2";
  *@return int
  */
 
--(int)  getLatestVersusGame
+- (int)getLatestVersusGame
 {
     int gid = -1;
     NSString *selectGame = [NSString stringWithFormat: @"SELECT MAX(%@) FROM %@ WHERE %@ IS 0",ID,DATABASE_TABLE_VERSUS, VICTORY ];
@@ -325,10 +332,12 @@ NSString *LAST_PLAYED_CELL_P2 = @"LAST_PLAYED_CELL_P2";
             sqlite3_finalize(sentence);
         }
     }
-    @catch (NSException *exception) {
+    @catch (NSException *exception)
+    {
         NSLog(@"Error getting restorable Versus Game from DB");
     }
-    @finally {
+    @finally
+    {
         [self close];
     }
     return gid;
@@ -344,7 +353,7 @@ NSString *LAST_PLAYED_CELL_P2 = @"LAST_PLAYED_CELL_P2";
  * @return
  */
 
-- (void) updateVersusGame: (VersusGame *) game
+- (void)updateVersusGame:(VersusGame *)game
 {
     NSString * sentence =  [[[[[[[@"UPDATE " stringByAppendingString:DATABASE_TABLE_VERSUS]
                             stringByAppendingString: @" SET %@ = ?," ]
@@ -370,15 +379,17 @@ NSString *LAST_PLAYED_CELL_P2 = @"LAST_PLAYED_CELL_P2";
         sqlite3_bind_int(sql, i++, game.victory);
         [self executeSentence:sql];
     }
-    @catch (NSException *exception) {
+    @catch (NSException *exception)
+    {
         NSLog(@"Error Updating Versus Game");
     }
-    @finally {
+    @finally
+    {
         [self close];
     }
 }
 
--(NSMutableArray *) getCleaneableRestorableVersusGames
+- (NSMutableArray *)getCleaneableRestorableVersusGames
 {
     NSMutableArray *deletingGames = [[NSMutableArray alloc]init];
     NSString *selectGame = [NSString stringWithFormat:
@@ -403,16 +414,18 @@ NSString *LAST_PLAYED_CELL_P2 = @"LAST_PLAYED_CELL_P2";
                 NSLog(@"Result code: %i",sqlite3_errcode(dataBase));
         }
     }
-    @catch (NSException *exception) {
+    @catch (NSException *exception)
+    {
         NSLog(@"Error getting cleanable restorable Versus Game from DB");
     }
-    @finally {
+    @finally
+    {
         [self close];
     }
     return deletingGames;
 }
 
--(void) cleanRestorableVersusGames
+- (void)cleanRestorableVersusGames
 {
     NSMutableArray *deletingGames = [[NSMutableArray alloc]init];
     @try
@@ -423,31 +436,34 @@ NSString *LAST_PLAYED_CELL_P2 = @"LAST_PLAYED_CELL_P2";
             [self deleteVersusGame: [deletingGames[i] intValue] ];
         }
     }
-    @catch (NSException *exception) {
+    @catch (NSException *exception)
+    {
         NSLog(@"Error cleaning restorable Versus Game from DB");
     }
 
 }
 
--(void) deleteVersusGame: (int) gameId
+- (void)deleteVersusGame:(int)gameId
 {
     NSString *selectGame = [NSString stringWithFormat:
                             @"DELETE FROM %@ WHERE %@ = 0 AND %@ = %d",DATABASE_TABLE_VERSUS,VICTORY,ID,gameId ];
-    @try {
+    @try
+    {
         if ([self open])
         {
             sqlite3_stmt * sql = [self prepareSentence:selectGame];
             [self executeSentence:sql];
         }
     }
-    @catch (NSException *exception) {
+    @catch (NSException *exception)
+    {
        NSLog(@"Error deleting restorable Versus Game from DB");
     }
-    @finally {
+    @finally
+    {
         [self close];
 
     }
-    
 }
 
 @end

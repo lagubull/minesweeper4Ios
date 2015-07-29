@@ -1,7 +1,7 @@
 //
 //  Game.m
 //
-//  Created by admin on 09/05/13.
+//  Created by jlagunas on 09/05/13.
 //  Copyright (c) 2013 Jlaguna. All rights reserved.
 //
 

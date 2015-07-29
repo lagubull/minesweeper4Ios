@@ -2,7 +2,7 @@
 //  AppDelegate.m
 //  minesweeper
 //
-//  Created by admin on 06/11/13.
+//  Created by jlagunas on 06/11/13.
 //
 //
 
@@ -12,32 +12,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
     NSString * documentDirectory = [paths objectAtIndex:0];
-    _dataBasePath = [documentDirectory stringByAppendingPathComponent:@"bmdb.sqlite" ];
+    
+    self.dataBasePath = [documentDirectory stringByAppendingPathComponent:@"bmdb.sqlite" ];
+    
     [self loadDB];
     
     return YES;
-}
-
--(void) loadDB
-{
-    NSError *error;
-    BOOL success;
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
-    NSString * documentDirectory = [paths objectAtIndex:0];
-    NSString *writeblePath = [documentDirectory stringByAppendingPathComponent:@"bmdb.sqlite" ];
-    
-    success = [fileManager fileExistsAtPath:writeblePath];
-    if (success) return;
-    
-    NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent: @"bmdb.sqlite"];
-    [fileManager copyItemAtPath:defaultDBPath toPath:writeblePath error:&error];
-    
-    if (error)
-        NSLog(@"%@",[error localizedDescription]);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -65,6 +47,37 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - LoadDB
+
+- (void) loadDB
+{
+    NSError *error;
+    BOOL success;
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+    NSString * documentDirectory = [paths objectAtIndex:0];
+    NSString *writeblePath = [documentDirectory stringByAppendingPathComponent:@"bmdb.sqlite" ];
+    
+    success = [fileManager fileExistsAtPath:writeblePath];
+    
+    if (success)
+    {
+        return;
+    }
+    
+    NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent: @"bmdb.sqlite"];
+    
+    [fileManager copyItemAtPath:defaultDBPath toPath:writeblePath
+                          error:&error];
+    
+    if (error)
+    {
+        NSLog(@"%@",[error localizedDescription]);
+    }
 }
 
 @end

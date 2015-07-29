@@ -2,7 +2,7 @@
 //  main.m
 //  minesweeper
 //
-//  Created by admin on 06/11/13.
+//  Created by jlagunas on 06/11/13.
 //
 //
 

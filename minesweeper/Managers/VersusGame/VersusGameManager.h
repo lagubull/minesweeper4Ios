@@ -2,7 +2,7 @@
 //  VersusGameManager.h
 //  minesweeper
 //
-//  Created by admin on 12/04/13.
+//  Created by jlagunas on 12/04/13.
 //  Copyright (c) 2013 Jlaguna. All rights reserved.
 //
 

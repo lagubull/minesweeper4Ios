@@ -2,7 +2,7 @@
 //  AppDelegate.h
 //  minesweeper
 //
-//  Created by admin on 06/11/13.
+//  Created by jlagunas on 06/11/13.
 //
 //
 
@@ -13,4 +13,5 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) NSString *dataBaseName;
 @property (strong, nonatomic) NSString *dataBasePath;
+
 @end

@@ -2,7 +2,7 @@
 //  VersusGameTableViewController.h
 //  minesweeper
 //
-//  Created by admin on 13/05/13.
+//  Created by jlagunas on 13/05/13.
 //  Copyright (c) 2013 Jlaguna. All rights reserved.
 //
 

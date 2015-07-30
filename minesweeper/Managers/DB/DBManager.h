@@ -6,20 +6,44 @@
 //  Copyright (c) 2013 Jlaguna. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
-#define RESTORABLE_GAMES 10
+extern const NSUInteger kJMSRestorableGames;
 
 @class VersusGame;
-@class SingleGame;
 
 @interface DBManager : NSObject
 
-- (void)createsDB;
-- (void)upgrade:(int)oldVersion newVersion:(int)newVersion;
+/**
+ */
+- (void)createDB;
+
+/**
+ */
+- (void)upgrade:(NSNumber *)oldVersion
+     newVersion:(NSNumber *)newVersion;
+
+/**
+ Inserts new Versus_game.
+ 
+ @param VersusGame
+ */
 - (void)createVersusGame:(VersusGame *)versusGame;
+
+/**
+ Get Restorable Versus Games
+ 
+ @return NSMutableArray
+ */
 - (NSMutableArray *)getRestorableVersusGame;
-- (int)getLatestVersusGame;
+
+/**
+ Get Latest Versus Game
+ 
+ @return int
+ */
+- (NSNumber *)getLatestVersusGame;
+
+/**
+ */
 - (void)updateVersusGame:(VersusGame *)game;
 
 @end

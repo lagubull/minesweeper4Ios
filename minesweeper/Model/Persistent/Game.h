@@ -6,14 +6,13 @@
 //  Copyright (c) 2013 Jlaguna. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "DBManager.h"
 
 #define CONSTANT_ROW 1000
 
 @interface Game : NSObject
 
-@property (atomic) int game_internal_id;
+@property (atomic, strong) NSNumber *gameInternalId;
 @property (atomic) int num_rows;
 @property (atomic) int num_columns;
 @property (atomic) int num_mines;
@@ -29,7 +28,7 @@
 
 -(id) initWithNumMines: (int) numMines numColumns:  (int)numColumns  numRows: (int) numRows;
 
--(void) initGame;
+-(void) setupGame;
 -(void) restoreBoard;
 -(void) findCoordinates: (int) position row : (int *) row column: (int  *)  column;
 -(NSString *) serializeVisible;

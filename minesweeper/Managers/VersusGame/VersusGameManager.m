@@ -27,15 +27,16 @@ int versusGameStatus = 0;
     return self;
 }
 
--(void) initGame
+- (void)initGame
 {
     [vvc loadBoard];
-    if (vGame.game_internal_id == -1)
+    
+    if (vGame.gameInternalId.integerValue == -1)
     {
         //initialise the board
         vGame.player = PLAYER_1;
         
-        [vGame initGame];
+        [vGame setupGame];
     }
     else
     {
@@ -49,7 +50,8 @@ int versusGameStatus = 0;
             [bvc paintCell: i*10+j +CONSTANT  title : [NSString stringWithFormat: @"%d",board[i][j] ] ];*/
 }
 
--(void) clickCell: (int) r column: (int) c
+- (void)clickCell:(int)r
+           column:(int) c
 {
     //if cell had not been clicked before
     if (vGame.visible[r][c]==0)
@@ -79,7 +81,7 @@ int versusGameStatus = 0;
     }
 }
 
--(void) passTurn: (int) cellId
+-(void)passTurn:(int)cellId
 {
     switch (vGame.player)
     {
@@ -93,7 +95,7 @@ int versusGameStatus = 0;
     [vvc passTurn: vGame.player];
 }
 
--(void) updateMinesCount
+- (void)updateMinesCount
 {
     vGame.remainingMines--;
     switch (vGame.player)
@@ -106,7 +108,7 @@ int versusGameStatus = 0;
     [vvc updateMinesCounters];
 }
 
--(void) checkVictory
+- (void)checkVictory
 {
     [self updateMinesCount];
     
@@ -127,7 +129,7 @@ int versusGameStatus = 0;
     }
 }
 
--(void) cellSelected: (int) cellID
+- (void)cellSelected:(int)cellID
 {
     if (vGame.last_cell_player1 == -1)
         [vGame persist];
@@ -159,7 +161,7 @@ int versusGameStatus = 0;
    }
 
 
--(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     [self initGame];
 }

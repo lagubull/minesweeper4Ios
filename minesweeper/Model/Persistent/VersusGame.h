@@ -5,9 +5,8 @@
 //  Created by jlagunas on 09/05/13.
 //  Copyright (c) 2013 Jlaguna. All rights reserved.
 //
-#import "Game.h"
 
-#import <Foundation/Foundation.h>
+#import "Game.h"
 
 @interface VersusGame : Game
 

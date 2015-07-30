@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 Jlaguna. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 @interface Tools : NSObject
 
 +(void) versionedScaleFactor: (UILabel *) label factor: (CGFloat) factor size: (CGFloat) size;

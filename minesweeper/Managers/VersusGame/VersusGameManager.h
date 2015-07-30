@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Jlaguna. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "VersusViewController.h"
 #import "VersusGame.h"
 
@@ -15,14 +14,11 @@
 
 @interface VersusGameManager : NSObject <UIAlertViewDelegate>
 
-
-@property (nonatomic) VersusGame *vGame;
-
+@property (nonatomic, strong) VersusGame *vGame;
 
 @property (nonatomic, strong) VersusViewController *vvc;
 
-
--(void) cellSelected: (int) cellID;
+-(void) cellSelected:(int)cellID;
 -(void) initGame;
 
 @end

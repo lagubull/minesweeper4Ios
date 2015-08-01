@@ -6,14 +6,18 @@
 //  Copyright (c) 2013 Jlaguna. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @class VersusGameCell;
 
+
+/**
+ View controller to show the list of restorable games
+ */
 @interface VersusGameTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) IBOutlet UIView *bannerViewFrame;
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
+
+@property (nonatomic, strong) IBOutlet UIView *bannerViewFrame;
+
 @property (nonatomic, weak) IBOutlet VersusGameCell *gameCell;
 
 @end

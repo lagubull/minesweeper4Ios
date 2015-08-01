@@ -6,22 +6,32 @@
 //  Copyright (c) 2013 Jlaguna. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @class VersusGame;
 
+/**
+ Shows the board for two people to engage in a versus game
+ */
 @interface VersusViewController : UIViewController <UIActionSheetDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *lblPlayer1;
+
 @property (strong, nonatomic) IBOutlet UILabel *lblPlayer2;
+
 @property (strong, nonatomic) IBOutlet UILabel *lblPlayer1Mines;
+
 @property (strong, nonatomic) IBOutlet UILabel *lblPlayer2Mines;
+
 @property (strong, nonatomic) IBOutlet UILabel *lblRemainingMines;
+
 @property (strong, nonatomic) IBOutlet UILabel *lblMines;
+
 @property (strong, nonatomic) IBOutlet UIScrollView *boardScroll;
+
 @property (strong, nonatomic) IBOutlet UIView *infoView;
+
 @property (strong, nonatomic) IBOutlet UIView *bannerContainer;
-@property (nonatomic) VersusGame *vGame;
+
+@property (nonatomic) VersusGame *versusGame;
 
 /**
  previous zoom scale
@@ -42,6 +52,5 @@
 - (void)passTurn:(NSInteger)player;
 
 - (IBAction)showOptions:(id) sender;
-
 
 @end

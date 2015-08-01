@@ -11,70 +11,107 @@
 #import "VersusGameCell.h"
 #import "VersusViewController.h"
 
+@interface VersusGameTableViewController ()
+
+@property (nonatomic, strong) NSMutableArray *games;
+
+@property (nonatomic, strong) NSMutableArray *gamesRestored;
+
+@property (nonatomic, strong) UIImageView *backgoundImageView;
+
+@end
+
 @implementation VersusGameTableViewController
 
-
-NSMutableArray *games;
-NSMutableArray *gamesRestored;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-    }
-    return self;
-}
+#pragma mark - ViewLifeCyle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
    
-    UIImageView *iv = [[UIImageView alloc] initWithImage: [UIImage imageNamed:NSLocalizedString(@"IMG_background", @"Background Image")]];
+    [self.tableView setBackgroundView:self.backgoundImageView];
     
-    [iv setFrame: self.view.frame];
-    [iv setAlpha: 1];
-    
-    [self.tableView setBackgroundView: iv ];
-    [self.tableView setDelegate: self];
-    [self.tableView setDataSource: self];
-   
+    [self.tableView setDelegate:self];
+    [self.tableView setDataSource:self];
 }
 
--(void) goBack: (id) sender
+- (void)viewWillAppear:(BOOL)animated
 {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [games removeAllObjects];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
-  	[self.navigationItem setTitle: NSLocalizedString(@"title_VGame_list", @"Title for the Versus Game List")];
-	[super viewWillAppear:animated];
-    gamesRestored = [[NSMutableArray alloc] init];
-    VersusGame * vg = [[VersusGame alloc] init];
-    games = [vg getRestorableGames];
+    [self.navigationController setNavigationBarHidden:NO
+                                             animated:NO];
+    
+    [self.navigationItem setTitle: NSLocalizedString(@"title_VGame_list", @"Title for the Versus Game List")];
+    
+    
     [self.tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [super viewWillDisappear:animated];
+    
+    [self.games removeAllObjects];
+    
+    self.games = nil;
+}
+
+- (void)viewDidUnload
+{
+    [self setTableView:nil];
+    [self setBannerViewFrame:nil];
+    
+    [super viewDidUnload];
+}
+
+#pragma mark - Subviews
+
+- (UIImageView *)backgoundImageView
+{
+    if (!_backgoundImageView)
+    {
+        _backgoundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:NSLocalizedString(@"IMG_background", @"Background Image")]];
+        
+        _backgoundImageView.frame = self.tableView.frame;
+        _backgoundImageView.alpha = 1.0f;
+    }
+    
+    return _backgoundImageView;
+}
+
+#pragma mark - Getters
+
+- (NSMutableArray *)games
+{
+    if (!_games)
+    {
+        VersusGame *vg = [[VersusGame alloc] init];
+        _games = [vg getRestorableGames];
+    }
+    
+    return _games;
+}
+
+- (NSMutableArray *)gamesRestored
+{
+    if (!_gamesRestored)
+    {
+        _gamesRestored = [[NSMutableArray alloc] init];
+    }
+    
+    return _gamesRestored;
 }
 
 #pragma mark - Table view data source
 
--(void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
+- (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    VersusViewController *vvc = [self.storyboard instantiateViewControllerWithIdentifier:@"VersusViewController"];
-    [vvc setVGame: [games objectAtIndex: indexPath.row ] ];
+    VersusViewController *versusViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"VersusViewController"];
+    versusViewController.versusGame = self.games[indexPath.row];
     
-    [self.navigationController pushViewController:vvc animated:YES];
+    [self.navigationController pushViewController:versusViewController
+                                         animated:YES];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -84,40 +121,38 @@ NSMutableArray *gamesRestored;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [games count];
+    return self.games.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"GameCell";
     
-    
     VersusGameCell *cell = (VersusGameCell*)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell) {
+    
+    if (!cell)
+    {
+        UINib *quoteCellNib = [UINib nibWithNibName:@"GameCell"
+                                             bundle:nil];
         
-        UINib *quoteCellNib = [UINib nibWithNibName:@"GameCell" bundle:nil];
-        [quoteCellNib instantiateWithOwner:self options:nil];
+        [quoteCellNib instantiateWithOwner:self
+                                   options:nil];
+        
         cell = self.gameCell;
         self.gameCell = nil;
     }
-    VersusGame * game = [games objectAtIndex: indexPath.row ];
-    if ( ![gamesRestored containsObject:indexPath])
+    
+    VersusGame *game = [self.games objectAtIndex: indexPath.row];
+    
+    if (![self.gamesRestored containsObject:indexPath])
     {
         [game restore];
-        [gamesRestored addObject:indexPath];
+        [self.gamesRestored addObject:indexPath];
     }
-        
     
-    [cell setVersusGames: game];
+    [cell setVersusGames:game];
+    
     return cell;
 }
-
-- (void)viewDidUnload {
-    [self setTableView:nil];
-    [self setBannerViewFrame:nil];
-    [super viewDidUnload];
-}
-
-
 
 @end

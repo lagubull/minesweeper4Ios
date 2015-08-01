@@ -30,7 +30,7 @@
 }
 
 
-#pragma mark - Init
+#pragma mark - SetUpGame
 
 - (void)setupGame
 {

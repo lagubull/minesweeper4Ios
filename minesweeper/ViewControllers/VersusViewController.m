@@ -16,133 +16,185 @@
 
 @interface VersusViewController ()
 
+@property (nonatomic, strong) VersusGameManager *versusGameManager;
+
+@property (nonatomic, strong) UIView *disclaimerView;
+
+@property (nonatomic, strong) UITextView *bodyTextView;
+
+@property (nonatomic, assign) CGFloat cellHeight;
+
+@property (nonatomic, assign) CGFloat cellWidth;
+
+@property (nonatomic, strong) UIPinchGestureRecognizer *pinchGesture;
+
+- (void)setupLabels;
+
+- (void)loadBoard;
+
+- (void)reloadBoard;
+
+- (void)resizeSubviews:(NSArray *)subviews;
+
+- (void)removeSubviews:(NSArray *)subviews;
+
+#pragma mark - ScaleImage
+
+- (void)scaleImage:(UIPinchGestureRecognizer *)recognizer;
+
+#pragma mark - PaintMine
+
+- (void)paintMine:(NSInteger)tag
+           player:(NSInteger)player
+        animation:(BOOL)animation;
+
+- (void)paintCell:(NSInteger)tag
+            title:(NSString *)title;
+
+-(void)updateMinesCounters;
+
+- (UIColor *)getNumberColor:(NSString *)number;
+
+- (void)passTurn:(NSInteger)player;
+
+- (void)goBack;
+
+- (IBAction)showOptions:(id)sender;
+
+- (void)dismissDisclaimer;
+
 @end
 
 @implementation VersusViewController
 
-VersusGameManager *vgm;
-float cell_width;
-float cell_height;
-UIView * disclaimerView;
-UITextView * bodyTextView;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+#pragma  mark - ViewLifecycle
 
 - (void)viewDidLoad
 {
-    vgm = [[VersusGameManager alloc] init];
-    [vgm setVersusViewController: self];
-    if (self.vGame != nil)
-        [vgm setVersusGame: self.vGame];
     [super viewDidLoad];
     
-    cell_height = cell_width = _boardScroll.frame.size.width / [vgm.versusGame columnsNumber];
-    cell_height = cell_width = MIN(2 *(_boardScroll.frame.size.width / [vgm.versusGame columnsNumber]), cell_width);
-    cell_height = cell_width = MAX((_boardScroll.frame.size.width / [vgm.versusGame columnsNumber]), cell_width);
-    cell_height = MAX((_boardScroll.frame.size.height / [vgm.versusGame rowsNumber]), cell_height);
-
-    [vgm setupGame];
-    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(scaleImage:)];
-    [self.view addGestureRecognizer:pinchGesture];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self.view addGestureRecognizer:self.pinchGesture];
     
-    [self initLabels];
+    [self.navigationController setNavigationBarHidden:YES
+                                             animated:NO];
     
+    [self setupLabels];
+    
+    
+    [self.versusGameManager setupGame];
 }
 
--(void) initLabels
+#pragma mark - setupLabels
+
+- (void)setupLabels
 {
-    [_lblRemainingMines setText:
-     NSLocalizedString(@"MINES_LEFT",@"Remaining mines")];
-    [Tools versionedScaleFactor:_lblRemainingMines factor:0.7 size:15];
-    [Tools versionedTextAlignment:_lblRemainingMines alignment:NSTextAlignmentCenter];
+    self.lblRemainingMines.text = NSLocalizedString(@"MINES_LEFT", @"Remaining mines");
     
-    [_lblPlayer1 setText: [NSString stringWithUTF8String: [[NSString stringWithFormat: @" %@:",
-     NSLocalizedString(@"PLAYER_1",@"Player 1 text")] UTF8String ]] ];
-    [Tools versionedScaleFactor:_lblPlayer1 factor:0.7 size:15];
-    [Tools versionedTextAlignment:_lblPlayer1 alignment:NSTextAlignmentLeft];
+    [Tools versionedScaleFactor:self.lblRemainingMines
+                         factor:0.7
+                           size:15];
     
-    [_lblPlayer2 setText: [NSString stringWithUTF8String: [[NSString stringWithFormat: @" %@:",
-     NSLocalizedString(@"PLAYER_2",@"Player 2 text")] UTF8String ]] ];
-    [Tools versionedScaleFactor:_lblPlayer2 factor:0.7 size:15];
-    [Tools versionedTextAlignment:_lblPlayer2 alignment:NSTextAlignmentLeft];
+    [Tools versionedTextAlignment:self.lblRemainingMines
+                        alignment:NSTextAlignmentCenter];
+    
+    self.lblPlayer1.text = [NSString stringWithUTF8String:[[NSString stringWithFormat:@" %@:",
+                                                            NSLocalizedString(@"PLAYER_1", @"Player 1 text")] UTF8String]];
+    
+    [Tools versionedScaleFactor:self.lblPlayer1
+                         factor:0.7
+                           size:15];
+    
+    [Tools versionedTextAlignment:self.lblPlayer1
+                        alignment:NSTextAlignmentLeft];
+    
+    self.lblPlayer2.text = [NSString stringWithUTF8String:[[NSString stringWithFormat: @" %@:",
+                                                            NSLocalizedString(@"PLAYER_2",@"Player 2 text")] UTF8String]];
+    
+    [Tools versionedScaleFactor:self.lblPlayer2
+                         factor:0.7
+                           size:15];
+    
+    [Tools versionedTextAlignment:self.lblPlayer2
+                        alignment:NSTextAlignmentLeft];
 }
+
+
+#pragma mark - Getters
+
+- (VersusGameManager *)versusGameManager
+{
+    if (!_versusGameManager)
+    {
+        _versusGameManager = [[VersusGameManager alloc] init];
+        _versusGameManager.versusViewController = self;
+        
+        _versusGameManager.versusGame = self.versusGame;
+    }
+    
+    return _versusGameManager;
+}
+
+- (CGFloat)cellHeight
+{
+    if (_cellHeight == 0.0f)
+    {
+        _cellHeight = self.boardScroll.frame.size.width / self.versusGameManager.versusGame.columnsNumber;
+        
+        _cellHeight = MIN (2.0f * (self.boardScroll.frame.size.width / self.versusGameManager.versusGame.columnsNumber), _cellHeight);
+        _cellHeight = MAX ((self.boardScroll.frame.size.width / self.versusGameManager.versusGame.columnsNumber), _cellHeight);
+        _cellHeight = MAX ((self.boardScroll.frame.size.height / self.versusGameManager.versusGame.rowsNumber), _cellHeight);
+    }
+    
+    return _cellHeight;
+}
+
+- (CGFloat)cellWidth
+{
+    if (_cellWidth == 0.0f)
+    {
+        _cellWidth = self.cellHeight;
+    }
+    
+    return _cellWidth;
+}
+
+- (UIPinchGestureRecognizer *)pinchGesture
+{
+    if (!_pinchGesture)
+    {
+        _pinchGesture = [[UIPinchGestureRecognizer alloc] initWithTarget:self
+                                                                  action:@selector(scaleImage:)];
+    }
+    
+    return _pinchGesture;
+}
+
+#pragma mark - ButtonActions
 
 - (IBAction)selection:(id)sender
 {
-    [vgm cellSelected:((UIButton *)sender).tag];
+    [self.versusGameManager cellSelected:((UIButton *)sender).tag];
 }
 
--(void) reloadBoard
-{
-    [_boardScroll setContentSize: CGSizeMake([vgm.versusGame columnsNumber] * cell_width, [vgm.versusGame rowsNumber] * cell_height)];
-    
-    [self resizeSubViews: [_boardScroll subviews]];
-    for (int r = 0;r < [vgm.versusGame rowsNumber];r++)
-    {
-        for (int c = 0;c < [vgm.versusGame columnsNumber];c++)
-        {
-            if (vgm.versusGame.visible[r][c] != 0)
-            {
-                if (vgm.versusGame.board[r][c] == 9)
-                {
-                    MATCGlossyButton *buttonCell = (MATCGlossyButton *)[self.view viewWithTag:r * kJMSRow + c + kJMSRow];
-                    [self removeSubViews: [buttonCell subviews]];
-                    [self paintMine:(r * kJMSRow + c + kJMSRow) player: vgm.versusGame.visible[r][c] animation:NO];
-                }
-            }
-        }
-    }
-}
+#pragma mark - LoadBoard
 
--(void) resizeSubViews: (NSArray *) subviews
-{
-    for (UIView * subView in subviews)
-    {
-        [subView setFrame:CGRectMake((subView.frame.origin.x / subView.frame.size.width * cell_width ) , (subView.frame.origin.y / subView.frame.size.height * cell_height), cell_width, cell_height)];
-    }
-    
-}
-
--(void) removeSubViews: (NSArray *) subviews
-{
-    for (UIView * subView in subviews)
-    {
-        [subView removeFromSuperview];
-    }
-    
-}
-
--(void)loadBoard
+- (void)loadBoard
 {
     int cont = 0;
     
-    [_boardScroll setContentSize:CGSizeMake([vgm.versusGame columnsNumber] * cell_width,
-                                            [vgm.versusGame rowsNumber] * cell_height)];
+    [self.boardScroll setContentSize:CGSizeMake([self.versusGameManager.versusGame columnsNumber] * self.cellWidth,
+                                                [self.versusGameManager.versusGame rowsNumber] * self.cellHeight)];
     
-    for (UIView * subView in [_boardScroll subviews])
+    for (UIView * subView in self.boardScroll.subviews)
     {
         [subView removeFromSuperview];
     }
     
-    for (int i = 0; i < [vgm.versusGame rowsNumber]; i++)
+    for (NSInteger i = 0; i < self.versusGameManager.versusGame.rowsNumber; i++)
     {
-        for (int j = 0; j < [vgm.versusGame columnsNumber]; j++)
+        for (NSInteger j = 0; j < self.versusGameManager.versusGame.columnsNumber; j++)
         {
-            MATCGlossyButton *buttonCell  = [[MATCGlossyButton alloc] init];
+            MATCGlossyButton *buttonCell = [[MATCGlossyButton alloc] init];
             
             buttonCell.cornerRadius = 5.0f;
             [buttonCell setButtonColor: [UIColor colorWithRed:(155.0f / 255.0f)
@@ -150,21 +202,29 @@ UITextView * bodyTextView;
                                                          blue:(255.0f / 255.0f)
                                                         alpha:0.5f]];
             
-            buttonCell.frame = CGRectMake((cell_width * j ) , (cell_height * i), cell_width, cell_height);
-            [buttonCell setTag:(kJMSRow * i + j + kJMSRow)];
-            [buttonCell setBackgroundColor: [UIColor clearColor]];
-            [buttonCell setTitle: @"" forState:UIControlStateNormal];
-            [buttonCell.titleLabel setFrame:buttonCell.frame];
-            [buttonCell.titleLabel setBackgroundColor: [UIColor clearColor] ];
-            [[buttonCell layer] setBorderColor:[[UIColor darkGrayColor] CGColor]];
-            [[buttonCell layer] setBorderWidth:1.0f];
-            [[buttonCell layer] setCornerRadius:5.0f];
+            buttonCell.frame = CGRectMake((self.cellWidth * j),
+                                          (self.cellHeight * i),
+                                          self.cellWidth,
+                                          self.cellHeight);
+            
+            buttonCell.tag = (kJMSRow * i + j + kJMSRow);
+            buttonCell.backgroundColor = [UIColor clearColor];
+            
+            [buttonCell setTitle:@""
+                        forState:UIControlStateNormal];
+            
+            buttonCell.titleLabel.frame = buttonCell.frame;
+            buttonCell.titleLabel.backgroundColor = [UIColor clearColor];
+            
+            buttonCell.layer.borderColor = [UIColor darkGrayColor].CGColor;
+            buttonCell.layer.borderWidth = 1.0f;
+            buttonCell.layer.cornerRadius = 5.0f;
             
             [buttonCell addTarget:self
                            action:@selector(selection:)
                  forControlEvents: UIControlEventTouchUpInside];
             
-            [_boardScroll addSubview:buttonCell];
+            [self.boardScroll addSubview:buttonCell];
             
             cont++;
         }
@@ -173,32 +233,99 @@ UITextView * bodyTextView;
     [self updateMinesCounters];
 }
 
+#pragma mark - ReloadBoard
+
+- (void)reloadBoard
+{
+    [self.boardScroll setContentSize:CGSizeMake(self.versusGameManager.versusGame.columnsNumber * self.cellWidth,
+                                                self.versusGameManager.versusGame.rowsNumber * self.cellHeight)];
+    
+    [self resizeSubviews:[self.boardScroll subviews]];
+    
+    for (NSInteger row = 0; row < self.versusGameManager.versusGame.rowsNumber; row++)
+    {
+        for (NSInteger column = 0; column < self.versusGameManager.versusGame.columnsNumber; column++)
+        {
+            if (self.versusGameManager.versusGame.visible[row][column] != 0)
+            {
+                if (self.versusGameManager.versusGame.board[row][column] == 9)
+                {
+                    MATCGlossyButton *buttonCell = (MATCGlossyButton *)[self.view viewWithTag:row * kJMSRow + column + kJMSRow];
+                    
+                    [self removeSubviews:buttonCell.subviews];
+                    
+                    [self paintMine:(row * kJMSRow + column + kJMSRow)
+                             player:self.versusGameManager.versusGame.visible[row][column]
+                          animation:NO];
+                }
+            }
+        }
+    }
+}
+
+#pragma mark - ResizeSubiews
+
+- (void)resizeSubviews:(NSArray *)subviews
+{
+    for (UIView * subView in subviews)
+    {
+        [subView setFrame:CGRectMake((subView.frame.origin.x / subView.frame.size.width * self.cellWidth),
+                                     (subView.frame.origin.y / subView.frame.size.height * self.cellHeight),
+                                     self.cellWidth,
+                                     self.cellHeight)];
+    }
+}
+
+#pragma mark - RemoveSubviews
+
+- (void)removeSubviews:(NSArray *)subviews
+{
+    for (UIView * subView in subviews)
+    {
+        [subView removeFromSuperview];
+    }
+}
+
+#pragma mark - ScaleImage
 
 - (void)scaleImage:(UIPinchGestureRecognizer *)recognizer
 {
     if([recognizer state] == UIGestureRecognizerStateEnded)
     {
-		_previousScale = 1.0;
+        self.previousScale = 1.0f;
         
-		return;
-	}
+        return;
+    }
     
-	CGFloat newScale = 1.0 - (_previousScale - [recognizer scale]);
+    CGFloat newScale = 1.0f - (self.previousScale - recognizer.scale);
     
-    cell_height = cell_width = MIN(2 *(_boardScroll.frame.size.width / [vgm.versusGame columnsNumber]), cell_width * newScale);
-    cell_height = cell_width = MAX((_boardScroll.frame.size.width / [vgm.versusGame columnsNumber]), cell_width);
-    cell_height = MAX((_boardScroll.frame.size.height / [vgm.versusGame rowsNumber]), cell_height);
+    self.cellHeight = self.cellWidth = MIN(2.0f *(self.boardScroll.frame.size.width / self.versusGameManager.versusGame.columnsNumber), self.cellWidth * newScale);
+    
+    self.cellHeight = self.cellWidth = MAX((self.boardScroll.frame.size.width / self.versusGameManager.versusGame.columnsNumber), self.cellWidth);
+    
+    self.cellHeight = MAX((self.boardScroll.frame.size.height / self.versusGameManager.versusGame.rowsNumber), self.cellHeight);
+    
     [self reloadBoard];
 }
+
+#pragma mark - PaintMine
 
 - (void)paintMine:(NSInteger)tag
            player:(NSInteger)player
         animation:(BOOL)animation
 {
     MATCGlossyButton *buttonCell = (MATCGlossyButton *)[self.view viewWithTag:tag];
-    UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0 , 0, cell_width, cell_height)];
-    UIImageView *flag =  [[UIImageView alloc] initWithFrame:CGRectMake(cell_width/2 - 4 , 3/4*cell_height, cell_width/2, cell_height) ];
-       
+    
+    UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                                                     0.0f,
+                                                                     self.cellWidth,
+                                                                     self.cellHeight)];
+    
+    UIImageView *flag = [[UIImageView alloc] initWithFrame:CGRectMake((self.cellWidth / 2 - 4),
+                                                                       (3 / 4 * self.cellHeight),
+                                                                       self.cellWidth / 2,
+                                                                       self.cellHeight)];
+    
     switch (player)
     {
         case JMSPlayer1:
@@ -209,19 +336,22 @@ UITextView * bodyTextView;
         }
         case JMSPlayer2:
         {
-              [flag setImage:[UIImage imageNamed:NSLocalizedString(@"IMG_PLAYER1", @"Background Image for the Player 1 found mine")]];
+            [flag setImage:[UIImage imageNamed:NSLocalizedString(@"IMG_PLAYER1", @"Background Image for the Player 1 found mine")]];
             
             break;
         }
     }
-   
+    
     [containerView addSubview: flag];
     [buttonCell addSubview:containerView];
-
+    
     if (animation)
     {
         CGPoint origin1 = containerView.center;
-        CGPoint target1 = CGPointMake(containerView.center.x, containerView.center.y-5);
+        
+        CGPoint target1 = CGPointMake(containerView.center.x,
+                                      containerView.center.y - 5);
+        
         CABasicAnimation *bounce1 = [CABasicAnimation animationWithKeyPath:@"position.y"];
         
         bounce1.fromValue = [NSNumber numberWithInt:origin1.y];
@@ -230,20 +360,24 @@ UITextView * bodyTextView;
         bounce1.autoreverses = YES;
         bounce1.repeatCount = 2;
         
-        [containerView.layer addAnimation:bounce1 forKey:@"position"];
+        [containerView.layer addAnimation:bounce1
+                                   forKey:@"position"];
         
         //Rotation Animation:
-        CABasicAnimation *rota = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+        CABasicAnimation *retation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
         
-        rota.duration = 1;
-        rota.autoreverses = YES;
-        rota.removedOnCompletion = NO;
-        rota.fromValue = [NSNumber numberWithFloat: -0.5];
-        rota.toValue = [NSNumber numberWithFloat: 0.5 ];
+        retation.duration = 1;
+        retation.autoreverses = YES;
+        retation.removedOnCompletion = NO;
+        retation.fromValue = [NSNumber numberWithFloat:-0.5];
+        retation.toValue = [NSNumber numberWithFloat:0.5 ];
         
-        [flag.layer addAnimation: rota forKey: @"rotation"];
+        [flag.layer addAnimation:retation
+                          forKey:@"rotation"];
     }
 }
+
+#pragma mark - paintCell
 
 - (void)paintCell:(NSInteger)tag
             title:(NSString *)title
@@ -264,47 +398,105 @@ UITextView * bodyTextView;
     }
 }
 
--(void) updateMinesCounters
+#pragma mark - UpdateMinesCounters
+
+-(void)updateMinesCounters
 {
-    [_lblPlayer1Mines setText: [NSString stringWithFormat: @"%@", @([vgm.versusGame minesPlayer1])]];
-    [Tools versionedScaleFactor:_lblPlayer1Mines factor:0.7 size:15];
-    [Tools versionedTextAlignment:_lblPlayer1Mines alignment:NSTextAlignmentCenter];
+    self.lblPlayer1Mines.text = [NSString stringWithFormat:@"%@", @(self.versusGameManager.versusGame.minesPlayer1)];
     
-    [_lblPlayer2Mines setText: [NSString stringWithFormat: @"%@", @([vgm.versusGame minesPlayer2])]];
-    [Tools versionedScaleFactor:_lblPlayer2Mines factor:0.7 size:15];
-    [Tools versionedTextAlignment:_lblPlayer2Mines alignment:NSTextAlignmentCenter];
+    [Tools versionedScaleFactor:self.lblPlayer1Mines
+                         factor:0.7
+                           size:15];
     
-    [_lblMines setText: [NSString stringWithFormat: @"%@", @([vgm.versusGame remainingMines])]];
-    [Tools versionedScaleFactor:_lblMines factor:0.7 size:15];
-    [Tools versionedTextAlignment:_lblMines alignment:NSTextAlignmentCenter];
+    [Tools versionedTextAlignment:self.lblPlayer1Mines
+                        alignment:NSTextAlignmentCenter];
+    
+    /*-----------*/
+    
+    self.lblPlayer2Mines.text = [NSString stringWithFormat:@"%@", @(self.versusGameManager.versusGame.minesPlayer2)];
+    
+    [Tools versionedScaleFactor:self.lblPlayer2Mines
+                         factor:0.7
+                           size:15];
+    
+    [Tools versionedTextAlignment:self.lblPlayer2Mines
+                        alignment:NSTextAlignmentCenter];
+    
+    /*-----------*/
+    
+    self.lblMines.text = [NSString stringWithFormat:@"%@", @(self.versusGameManager.versusGame.remainingMines)];
+    
+    [Tools versionedScaleFactor:self.lblMines
+                         factor:0.7
+                           size:15];
+    
+    [Tools versionedTextAlignment:self.lblMines
+                        alignment:NSTextAlignmentCenter];
 }
 
--(UIColor *) getNumberColor: (NSString *) number
+#pragma mark - GetNumberColor
+
+- (UIColor *)getNumberColor:(NSString *)number
 {
-    UIColor * color = [UIColor clearColor];
-    switch ([number intValue])
+    UIColor *color = [UIColor clearColor];
+    
+    switch (number.intValue)
     {
-        case 1: color = [UIColor blueColor];
+        case 1:
+        {
+            color = [UIColor blueColor];
+            
             break;
-        case 2: color = [UIColor redColor];
+        }
+        case 2:
+        {
+            color = [UIColor redColor];
+            
             break;
-        case 3: color = [UIColor yellowColor];
+        }
+        case 3:
+        {
+            color = [UIColor yellowColor];
+            
             break;
-        case 4: color = [UIColor blackColor];
+        }
+        case 4:
+        {
+            color = [UIColor blackColor];
+            
             break;
-        case 5: color = [UIColor orangeColor];
+        }
+        case 5:
+        {
+            color = [UIColor orangeColor];
+            
             break;
-        case 6: color = [UIColor greenColor];
+        }
+        case 6:
+        {
+            color = [UIColor greenColor];
+            
             break;
-        case 7: color = [UIColor purpleColor];
+        }
+        case 7:
+        {
+            color = [UIColor purpleColor];
+            
             break;
-        case 8: color = [UIColor magentaColor];
+        }
+        case 8:
+        {
+            color = [UIColor magentaColor];
+            
             break;
+        }
     }
     
     return color;
     
 }
+
+#pragma mark - PassTurn
 
 - (void)passTurn:(NSInteger)player
 {
@@ -312,26 +504,28 @@ UITextView * bodyTextView;
     {
         case JMSPlayer1:
         {
-            [[self.lblPlayer1 layer] setBorderColor:[[UIColor redColor] CGColor]];
-            [[self.lblPlayer1 layer] setBorderWidth:2];
+            self.lblPlayer1.layer.borderColor = [UIColor redColor].CGColor;
+            self.lblPlayer1.layer.borderWidth = 2;
             
-            [[self.lblPlayer2 layer] setBorderColor:[[UIColor clearColor] CGColor]];
-            [[self.lblPlayer2 layer] setBorderWidth:0];
+            self.lblPlayer2.layer.borderColor = [UIColor clearColor].CGColor;
+            self.lblPlayer2.layer.borderWidth = 0;
             
             break;
         }
         case JMSPlayer2:
         {
-            [[self.lblPlayer2 layer] setBorderColor:[[UIColor redColor] CGColor]];
-            [[self.lblPlayer2 layer] setBorderWidth:2];
+            self.lblPlayer2.layer.borderColor = [UIColor redColor].CGColor;
+            self.lblPlayer2.layer.borderWidth = 2;
             
-            [[self.lblPlayer1 layer] setBorderColor:[[UIColor clearColor] CGColor]];
-            [[self.lblPlayer1 layer] setBorderWidth:0];
+            self.lblPlayer1.layer.borderColor = [UIColor clearColor].CGColor;
+            self.lblPlayer1.layer.borderWidth = 0;
             
             break;
         }
     }
 }
+
+#pragma mark - GoBack
 
 - (void)goBack
 {
@@ -346,6 +540,8 @@ UITextView * bodyTextView;
     }
 }
 
+#pragma mark - ShowOptions
+
 - (IBAction)showOptions:(id)sender
 {
     UIActionSheet *optionsSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"STR_OptionsTitle", @"Text for options")
@@ -356,6 +552,8 @@ UITextView * bodyTextView;
     
     [optionsSheet  showInView:self.view];
 }
+
+#pragma mark - ActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)optionsSheet clickedButtonAtIndex:(NSInteger)optionIndex
 {
@@ -370,15 +568,21 @@ UITextView * bodyTextView;
     }
 }
 
--(BOOL)canPerformAction:(SEL)action withSender:(id)sender
+#pragma mark - UIResponder
+
+- (BOOL)canPerformAction:(SEL)action
+             withSender:(id)sender
 {
-    [bodyTextView resignFirstResponder];
+    [self.bodyTextView resignFirstResponder];
+    
     return NO;
 }
 
--(void) dismissDisclaimer
+#pragma mark - DissmissDisclaimer
+
+- (void)dismissDisclaimer
 {
-    [disclaimerView removeFromSuperview];
+    [self.disclaimerView removeFromSuperview];
 }
 
 

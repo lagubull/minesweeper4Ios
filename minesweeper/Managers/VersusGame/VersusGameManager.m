@@ -49,11 +49,6 @@
     }
     
     [self.versusViewController passTurn:self.versusGame.player];
-    
-    /*For test purposes*/
-    /*  for (int i = 0; i < _num_rows; i++)
-     for (int j = 0; j < _num_columns; j++)
-     [bvc paintCell: i*10+j +CONSTANT  title : [NSString stringWithFormat: @"%d",board[i][j] ] ];*/
 }
 
 #pragma mark - ClickCell
@@ -75,7 +70,7 @@
                                            title:value];
             
             //if not near mines
-            if (self.versusGame.board[row][column]==0)
+            if (self.versusGame.board[row][column] == 0)
             {
                 //loop through the nearby cells and click them aswell
                 for (NSInteger row2 = MAX (0, (row - 1)); row2 < MIN (self.versusGame.rowsNumber, (row + 2)); row2++)
@@ -106,8 +101,8 @@
     column = malloc(4);
     
     [self.versusGame findCoordinatesWithPosition:cellID
-                                 row:row
-                              column:column];
+                                             row:row
+                                          column:column];
     
     if (self.versusGame.visible[*row][*column] == 0)
     {

@@ -51,6 +51,6 @@
 
 - (void)passTurn:(NSInteger)player;
 
-- (IBAction)showOptions:(id) sender;
+- (IBAction)showOptions:(id)sender;
 
 @end

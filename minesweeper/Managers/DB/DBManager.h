@@ -1,6 +1,6 @@
 //
 //  DBManager.h
-//  DBTest
+//  mineSweeper
 //
 //  Created by jlagunas on 24/04/13.
 //  Copyright (c) 2013 Jlaguna. All rights reserved.

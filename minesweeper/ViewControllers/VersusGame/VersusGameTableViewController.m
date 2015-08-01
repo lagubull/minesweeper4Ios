@@ -52,9 +52,8 @@
 {
     [super viewWillDisappear:animated];
     
-    [self.games removeAllObjects];
-    
     self.games = nil;
+    self.gamesRestored = nil;
 }
 
 - (void)viewDidUnload
@@ -142,7 +141,7 @@
         self.gameCell = nil;
     }
     
-    VersusGame *game = [self.games objectAtIndex: indexPath.row];
+    VersusGame *game = [self.games objectAtIndex:indexPath.row];
     
     if (![self.gamesRestored containsObject:indexPath])
     {

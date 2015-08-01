@@ -30,19 +30,13 @@
 
 - (void)setupLabels;
 
-- (void)loadBoard;
-
 - (void)reloadBoard;
 
 - (void)resizeSubviews:(NSArray *)subviews;
 
 - (void)removeSubviews:(NSArray *)subviews;
 
-#pragma mark - ScaleImage
-
 - (void)scaleImage:(UIPinchGestureRecognizer *)recognizer;
-
-#pragma mark - PaintMine
 
 - (void)paintMine:(NSInteger)tag
            player:(NSInteger)player
@@ -51,15 +45,9 @@
 - (void)paintCell:(NSInteger)tag
             title:(NSString *)title;
 
--(void)updateMinesCounters;
-
 - (UIColor *)getNumberColor:(NSString *)number;
 
-- (void)passTurn:(NSInteger)player;
-
 - (void)goBack;
-
-- (IBAction)showOptions:(id)sender;
 
 - (void)dismissDisclaimer;
 
@@ -79,7 +67,6 @@
                                              animated:NO];
     
     [self setupLabels];
-    
     
     [self.versusGameManager setupGame];
 }
@@ -584,6 +571,5 @@
 {
     [self.disclaimerView removeFromSuperview];
 }
-
 
 @end

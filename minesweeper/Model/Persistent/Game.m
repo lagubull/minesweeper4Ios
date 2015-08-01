@@ -57,10 +57,10 @@ const NSInteger kJMSRow = 1000;
         self.player1Username = @"Player 1";
         self.victory = 0;
         self.remainingMines = self.minesNumber;
-        self.dateLastPlayed = [Tools date2String: [NSDate date]];
+        self.dateLastPlayed = [Tools date2String:[NSDate date]];
         
         self.board = (NSInteger **)calloc(self.rowsNumber,
-                                    sizeof(int *));
+                                    sizeof(NSInteger *));
         
         self.visible = (NSInteger **)calloc(self.rowsNumber,
                                       sizeof(NSInteger *));

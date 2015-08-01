@@ -12,52 +12,69 @@
 
 @implementation VersusGameCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (void)setVersusGames:(VersusGame *)vGame
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
--(void) setVersusGames: (VersusGame *) vGame
-{
-    [Tools versionedScaleFactor:_lblRemainingMines factor:0.7 size:15];
-    [Tools versionedTextAlignment:_lblRemainingMines alignment:NSTextAlignmentLeft];
+    [Tools versionedScaleFactor:self.lblRemainingMines
+                          factor:0.7
+                           size:15];
     
-    [_lblPlayer1 setText: [NSString stringWithUTF8String: [vGame.player1_username UTF8String ]]];
-    [Tools versionedScaleFactor:_lblPlayer1 factor:0.7 size:15];
-    [Tools versionedTextAlignment:_lblPlayer1 alignment:NSTextAlignmentLeft];
+    [Tools versionedTextAlignment:self.lblRemainingMines
+                         alignment:NSTextAlignmentLeft];
     
-    [_lblPlayer2 setText: [NSString stringWithUTF8String: [vGame.player2_username UTF8String ]]];
-    [Tools versionedScaleFactor:_lblPlayer2 factor:0.7 size:15];
-    [Tools versionedTextAlignment:_lblPlayer2 alignment:NSTextAlignmentLeft];
+    /*---------------*/
     
-    [_lblPlayer1Mines setText: [NSString stringWithFormat:@"%d",[vGame mines_player1] ] ];
-    [Tools versionedScaleFactor:_lblPlayer1Mines factor:0.7 size:15];
-    [Tools versionedTextAlignment:_lblPlayer1Mines alignment:NSTextAlignmentCenter];
+    [self.lblPlayer1 setText:[NSString stringWithUTF8String:[vGame.player1Username UTF8String]]];
     
-    [_lblPlayer2Mines setText: [NSString stringWithFormat:@"%d",[vGame mines_player2] ] ];
-    [Tools versionedScaleFactor:_lblPlayer2Mines factor:0.7 size:15];
-    [Tools versionedTextAlignment:_lblPlayer2Mines alignment:NSTextAlignmentCenter];
     
-    [_lblMines setText: [NSString stringWithFormat: @"%d",[vGame remainingMines]]];
-    [Tools versionedScaleFactor:_lblMines factor:0.7 size:15];
-    [Tools versionedTextAlignment:_lblMines alignment:NSTextAlignmentCenter];
+    [Tools versionedScaleFactor:self.lblPlayer1
+                         factor:0.7
+                           size:15];
     
-    [_lblDate setText: [NSString stringWithUTF8String: [vGame.date_last_played UTF8String ]]];
-    [Tools versionedScaleFactor:_lblDate factor:0.7 size:15];
-    [Tools versionedTextAlignment:_lblDate alignment:NSTextAlignmentLeft];
-
+    [Tools versionedTextAlignment:self.lblPlayer1
+                        alignment:NSTextAlignmentLeft];
     
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+    /*---------------*/
+    
+    [self.lblPlayer2 setText: [NSString stringWithUTF8String: [vGame.player2Username UTF8String]]];
+    [Tools versionedScaleFactor:self.lblPlayer2
+                         factor:0.7
+                           size:15];
+    [Tools versionedTextAlignment:self.lblPlayer2 alignment:NSTextAlignmentLeft];
+    
+    /*---------------*/
+    
+    [self.lblPlayer1Mines setText: [NSString stringWithFormat:@"%@", @([vGame minesPlayer1])]];
+    [Tools versionedScaleFactor:self.lblPlayer1Mines
+                         factor:0.7
+                           size:15];
+    [Tools versionedTextAlignment:self.lblPlayer1Mines alignment:NSTextAlignmentCenter];
+    
+    /*---------------*/
+    
+    [self.lblPlayer2Mines setText:[NSString stringWithFormat:@"%@", @([vGame minesPlayer2])]];
+    
+    [Tools versionedScaleFactor:self.lblPlayer2Mines
+                         factor:0.7
+                           size:15];
+    
+    [Tools versionedTextAlignment:self.lblPlayer2Mines alignment:NSTextAlignmentCenter];
+    
+    /*---------------*/
+    
+    [self.lblMines setText: [NSString stringWithFormat:@"%@", @([vGame remainingMines])]];
+    
+    [Tools versionedScaleFactor:self.lblMines
+                         factor:0.7
+                           size:15];
+    [Tools versionedTextAlignment:self.lblMines alignment:NSTextAlignmentCenter];
+    
+    [self.lblDate setText:[NSString stringWithUTF8String:[vGame.dateLastPlayed UTF8String ]]];
+    
+    [Tools versionedScaleFactor:self.lblDate
+                         factor:0.7
+                           size:15];
+    
+    [Tools versionedTextAlignment:self.lblDate alignment:NSTextAlignmentLeft];
 }
 
 @end

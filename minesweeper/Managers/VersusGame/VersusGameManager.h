@@ -6,19 +6,29 @@
 //  Copyright (c) 2013 Jlaguna. All rights reserved.
 //
 
-#import "VersusViewController.h"
-#import "VersusGame.h"
+@class VersusViewController;
+@class VersusGame;
 
-#define PLAYER_1 1
-#define PLAYER_2 2
+/**
+ Identifies a player
+ */
+typedef NS_ENUM(NSUInteger, JMSPlayer)
+{
+    JMSPlayer1 = 0, //player 1
+    JMSPlayer2 = 1  // player 2
+};
 
+/**
+ Handles the versus game
+ */
 @interface VersusGameManager : NSObject <UIAlertViewDelegate>
 
-@property (nonatomic, strong) VersusGame *vGame;
+@property (nonatomic, strong) VersusGame *versusGame;
 
-@property (nonatomic, strong) VersusViewController *vvc;
+@property (nonatomic, strong) VersusViewController *versusViewController;
 
--(void) cellSelected:(int)cellID;
--(void) initGame;
+-(void)cellSelected:(NSInteger)cellID;
+
+-(void)setupGame;
 
 @end

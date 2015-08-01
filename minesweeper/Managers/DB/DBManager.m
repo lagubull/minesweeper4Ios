@@ -11,16 +11,20 @@
 #import "AppDelegate.h"
 #import "VersusGame.h"
 
-const NSUInteger kJMSRestorableGames = 10;
 
-#pragma mark - DATABASE_TABLE_VERSUS
+/**
+ Maximum number of unfinised games that can be restarted
+ */
+const NSInteger kJMSRestorableGames = 10;
 
-static NSString * const kJMSDatabaseTableVersus = @"VERSUS_GAME";
 
-/** 
- TAG NSString to distinguish database 
+/**
+ TAG NSString to distinguish database
  */
 static NSString * const kJMSTag = @"bm2_Database";
+
+
+static NSString * const kJMSDatabaseTableVersus = @"VERSUS_GAME";
 
 #pragma mark - TABLE GENERAL FIELDS
 
@@ -46,20 +50,26 @@ static NSString *kJMSLastPlayedCellPlayer2 = @"LAST_PLAYED_CELL_P2";
 @property (nonatomic,strong) NSString *databaseCreateVersus;
 
 /**
+ Opens the DB
  */
 - (BOOL)open;
 
 /**
+ Closes the DB
  */
 - (void)close;
 
 /**
- Prepares a SQL statement 
+ Prepares a SQL statement
+ 
+ @param string with the sentece to be prepared
  */
 - (sqlite3_stmt *)prepareSentence:(NSString *)SQLSentence;
 
 /**
  Executes a prepared statement
+ 
+ @param sentece to be excuted
  */
 - (void)executeSentence:(sqlite3_stmt *)sentence;
 
@@ -71,16 +81,23 @@ static NSString *kJMSLastPlayedCellPlayer2 = @"LAST_PLAYED_CELL_P2";
 - (void)executeSimpleSentence:(NSString *)SQLSentence;
 
 /**
+ fetches the games that are not finshed yet and are old enough to be deleted
+ 
+ @return unfinihsed games that can be deleted
  */
 - (NSMutableArray *)getCleaneableRestorableVersusGames;
 
 /**
+ Deletes old unfinished games
  */
 - (void)cleanRestorableVersusGames;
 
 /**
+ Deletes one versusGame
+ 
+ @param id of the game to be deleted
  */
-- (void)deleteVersusGame:(int)gameId;
+- (void)deleteVersusGame:(NSInteger)gameId;
 
 @end
 
@@ -130,7 +147,7 @@ static sqlite3 *dataBase;
     }
     @catch (NSException *exception)
     {
-        NSLog(@"ERROR opening DB: %@",exception);
+        NSLog(@"ERROR opening DB: %@", exception);
     }
     @finally
     {
@@ -148,7 +165,7 @@ static sqlite3 *dataBase;
     }
     @catch (NSException *exception)
     {
-        NSLog(@"ERROR closing DB: %@",exception);
+        NSLog(@"ERROR closing DB: %@", exception);
     }
 }
 
@@ -160,7 +177,7 @@ static sqlite3 *dataBase;
     {
         if ([self open])
         {
-            NSLog(@"%@",self.databaseCreateVersus);
+            DLog(@"%@",self.databaseCreateVersus);
             [self executeSimpleSentence:self.databaseCreateVersus];
             
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -173,7 +190,7 @@ static sqlite3 *dataBase;
     }
     @catch (NSException *exception)
     {
-        NSLog(@"%@",exception);
+        NSLog(@"%@", exception);
     }
     @finally
     {
@@ -198,12 +215,12 @@ static sqlite3 *dataBase;
         @try
         {
             NSAssert1(0, @"Error executing query: '%s'", sqlite3_errmsg(dataBase));
-            DLog(@"%@",SQLSentence);
+            DLog(@"%@", SQLSentence);
         }
         @catch (NSException *exception)
         {
-            NSLog(@"%@",exception);
-            NSLog(@"Error executing query, code: %i", sqlite3_errcode(dataBase));
+            NSLog(@"%@", exception);
+            DLog(@"Error executing query, code: %i", sqlite3_errcode(dataBase));
         }
     }
     
@@ -222,13 +239,12 @@ static sqlite3 *dataBase;
         }
         @catch (NSException *exception)
         {
-            NSLog(@"%@",exception);
-            NSLog(@"Error executing query, code: %i", sqlite3_errcode(dataBase));
+            NSLog(@"%@", exception);
+            DLog(@"Error executing query, code: %i", sqlite3_errcode(dataBase));
         }
     }
     
     sqlite3_finalize(sentence);
-    
 }
 
 - (void)executeSimpleSentence:(NSString *)SQLSentence
@@ -240,7 +256,7 @@ static sqlite3 *dataBase;
 - (void)upgrade:(NSNumber *)oldVersion
      newVersion:(NSNumber *)newVersion
 {
-    NSLog(@"Upgrading database from version %@ to %@, which will destroy all old data" , oldVersion, newVersion);
+    DLog(@"Upgrading database from version %@ to %@, which will destroy all old data" , oldVersion, newVersion);
     
     @try
     {
@@ -277,18 +293,18 @@ static sqlite3 *dataBase;
         
         int i = 1;
         
-        sqlite3_bind_int(sql, i++, versusGame.num_mines);
-        sqlite3_bind_int(sql, i++, versusGame.num_rows);
-        sqlite3_bind_int(sql, i++, versusGame.num_columns);
+        sqlite3_bind_int(sql, i++, (int)versusGame.minesNumber);
+        sqlite3_bind_int(sql, i++, (int)versusGame.rowsNumber);
+        sqlite3_bind_int(sql, i++, (int)versusGame.columnsNumber);
         sqlite3_bind_text(sql, i++, [[versusGame serializeVisible] UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_text(sql, i++, [[versusGame serializeMines] UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(sql, i++, [versusGame.player1_username UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(sql, i++, [versusGame.player2_username UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_int(sql, i++, versusGame.last_cell_player1);
-        sqlite3_bind_int(sql, i++, versusGame.last_cell_player2);
-        sqlite3_bind_int(sql, i++, versusGame.player);
-        sqlite3_bind_text(sql, i++, [versusGame.date_last_played UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_int(sql, i++, versusGame.victory);
+        sqlite3_bind_text(sql, i++, [versusGame.player1Username UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(sql, i++, [versusGame.player2Username UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_int(sql, i++, (int)versusGame.lastCellPlayer1);
+        sqlite3_bind_int(sql, i++, (int)versusGame.lastCellPlayer2);
+        sqlite3_bind_int(sql, i++, (int)versusGame.player);
+        sqlite3_bind_text(sql, i++, [versusGame.dateLastPlayed UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_int(sql, i++, (int)versusGame.victory);
         
         [self executeSentence:sql];
     }
@@ -307,13 +323,13 @@ static sqlite3 *dataBase;
     NSMutableArray *games = [[NSMutableArray alloc] init];
     NSInteger count = 1;
     NSString *selectGame = [NSString stringWithFormat:
-                            @"SELECT * FROM %@ WHERE %@ = 0 ORDER BY %@ DESC", kJMSDatabaseTableVersus, kJMSVictory, kJMSID ];
+                            @"SELECT * FROM %@ WHERE %@ = 0 ORDER BY %@ DESC", kJMSDatabaseTableVersus, kJMSVictory, kJMSID];
     
     @try
     {
         if ([self open])
         {
-            sqlite3_stmt * sentence = [self prepareSentence: selectGame];
+            sqlite3_stmt * sentence = [self prepareSentence:selectGame];
             
             while (sqlite3_step(sentence) == SQLITE_ROW)
             {
@@ -324,25 +340,25 @@ static sqlite3 *dataBase;
                 
                 VersusGame * game = [[VersusGame alloc] init];
                 int i = 0;
-                NSInteger gid = sqlite3_column_int(sentence, i++);
+                NSInteger gameId = sqlite3_column_int(sentence, i++);
                 
-                int numMines = sqlite3_column_int(sentence, i++);
-                int numRows = sqlite3_column_int(sentence, i++);
-                int numColumns = sqlite3_column_int(sentence, i++);
+                NSInteger numMines = sqlite3_column_int(sentence, i++);
+                NSInteger numRows = sqlite3_column_int(sentence, i++);
+                NSInteger numColumns = sqlite3_column_int(sentence, i++);
                 
                 game = [game initWithNumMines:numMines
                                    numColumns:numColumns
                                       numRows:numRows];
                 
-                game.gameInternalId = [[NSNumber alloc] initWithInteger:gid];
+                game.gameInternalId = gameId;
                 [game deSerializeVisible:[NSString stringWithUTF8String:(char*) sqlite3_column_text(sentence, i++)]];
                 [game deSerializeMines:[NSString stringWithUTF8String:(char*) sqlite3_column_text(sentence, i++)]];
-                [game setPlayer1_username:[NSString stringWithUTF8String:(char*) sqlite3_column_text(sentence, i++)]];
-                [game setPlayer2_username:[NSString stringWithUTF8String:(char*) sqlite3_column_text(sentence, i++)]];
-                [game setLast_cell_player1:sqlite3_column_int(sentence, i++)];
-                [game setLast_cell_player2:sqlite3_column_int(sentence, i++)];
+                [game setPlayer1Username:[NSString stringWithUTF8String:(char*) sqlite3_column_text(sentence, i++)]];
+                [game setPlayer2Username:[NSString stringWithUTF8String:(char*) sqlite3_column_text(sentence, i++)]];
+                [game setLastCellPlayer1:sqlite3_column_int(sentence, i++)];
+                [game setLastCellPlayer2:sqlite3_column_int(sentence, i++)];
                 [game setPlayer:sqlite3_column_int(sentence, i++)];
-                [game setDate_last_played:[NSString stringWithUTF8String:(char*) sqlite3_column_text(sentence, i++)]];
+                [game setDateLastPlayed:[NSString stringWithUTF8String:(char*) sqlite3_column_text(sentence, i++)]];
                 [game setVictory:sqlite3_column_int(sentence, i++)];
                 
                 [games addObject:game];
@@ -377,9 +393,9 @@ static sqlite3 *dataBase;
     return games;
 }
 
-- (NSNumber *)getLatestVersusGame
+- (NSInteger)getLatestVersusGame
 {
-    NSInteger gid = -1;
+    NSInteger latestVersusGameId = -1;
     NSString *selectGame = [NSString stringWithFormat: @"SELECT MAX(%@) FROM %@ WHERE %@ IS 0", kJMSID,kJMSDatabaseTableVersus, kJMSVictory];
     
     @try
@@ -390,11 +406,11 @@ static sqlite3 *dataBase;
             
             if (sqlite3_step(sentence) == SQLITE_ROW)
             {
-                gid = sqlite3_column_int(sentence, 0);
+                latestVersusGameId = sqlite3_column_int(sentence, 0);
             }
             else if(sqlite3_errcode(dataBase) != SQLITE_DONE)
             {
-                NSLog(@"Result code: %i", sqlite3_errcode(dataBase));
+                DLog(@"Result code: %i", sqlite3_errcode(dataBase));
             }
             
             sqlite3_finalize(sentence);
@@ -409,7 +425,7 @@ static sqlite3 *dataBase;
         [self close];
     }
     
-    return [[NSNumber alloc] initWithInteger:gid];
+    return latestVersusGameId;
 }
 
 - (void)updateVersusGame:(VersusGame *)game
@@ -427,18 +443,18 @@ static sqlite3 *dataBase;
         [self open];
         
         sentence = [NSString stringWithFormat:sentence, kJMSVisible, kJMSLastPlayedCellPlayer1,
-                    kJMSLastPlayedCellPlayer2, kJMSPlayer, kJMSDate, kJMSVictory, kJMSID, game.gameInternalId.integerValue];
+                    kJMSLastPlayedCellPlayer2, kJMSPlayer, kJMSDate, kJMSVictory, kJMSID, game.gameInternalId];
         
         sqlite3_stmt * sql = [self prepareSentence:sentence];
         
         int i = 1;
         
         sqlite3_bind_text(sql, i++, [[game serializeVisible] UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_int(sql, i++, game.last_cell_player1);
-        sqlite3_bind_int(sql, i++, game.last_cell_player2);
-        sqlite3_bind_int(sql, i++, game.player);
-        sqlite3_bind_text(sql, i++, [game.date_last_played  UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_int(sql, i++, game.victory);
+        sqlite3_bind_int(sql, i++, (int)game.lastCellPlayer1);
+        sqlite3_bind_int(sql, i++, (int)game.lastCellPlayer2);
+        sqlite3_bind_int(sql, i++, (int)game.player);
+        sqlite3_bind_text(sql, i++, [game.dateLastPlayed  UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_int(sql, i++, (int)game.victory);
         
         [self executeSentence:sql];
     }
@@ -454,17 +470,17 @@ static sqlite3 *dataBase;
 
 - (NSMutableArray *)getCleaneableRestorableVersusGames
 {
-    NSMutableArray *deletingGames = [[NSMutableArray alloc]init];
+    NSMutableArray *deletingGames = [[NSMutableArray alloc] init];
     
     NSString *selectGame = [NSString stringWithFormat:
-                            @"SELECT %@ FROM %@ WHERE %@ = 0 ORDER BY %@ DESC", kJMSID, kJMSDatabaseTableVersus, kJMSVictory, kJMSDate ];
+                            @"SELECT %@ FROM %@ WHERE %@ = 0 ORDER BY %@ DESC", kJMSID, kJMSDatabaseTableVersus, kJMSVictory, kJMSDate];
     int count = 0;
     
     @try
     {
         if ([self open])
         {
-            sqlite3_stmt * sentence = [self prepareSentence: selectGame];
+            sqlite3_stmt * sentence = [self prepareSentence:selectGame];
             
             while (sqlite3_step(sentence) == SQLITE_ROW)
             {
@@ -494,33 +510,33 @@ static sqlite3 *dataBase;
     {
         [self close];
     }
+    
     return deletingGames;
 }
 
 - (void)cleanRestorableVersusGames
 {
-    NSMutableArray *deletingGames = [[NSMutableArray alloc]init];
+    NSMutableArray *deletingGames = [[NSMutableArray alloc] init];
     
     @try
     {
         deletingGames = [self getCleaneableRestorableVersusGames];
         
-        for (int i = 0; i < [deletingGames count];i++)
+        for (int i = 0; i < [deletingGames count]; i++)
         {
-            [self deleteVersusGame:[deletingGames[i] intValue] ];
+            [self deleteVersusGame:[deletingGames[i] intValue]];
         }
     }
     @catch (NSException *exception)
     {
         NSLog(@"Error cleaning restorable Versus Game from DB");
     }
-    
 }
 
-- (void)deleteVersusGame:(int)gameId
+- (void)deleteVersusGame:(NSInteger)gameId
 {
     NSString *selectGame = [NSString stringWithFormat:
-                            @"DELETE FROM %@ WHERE %@ = 0 AND %@ = %d", kJMSDatabaseTableVersus, kJMSVictory, kJMSID, gameId];
+                            @"DELETE FROM %@ WHERE %@ = 0 AND %@ = %@", kJMSDatabaseTableVersus, kJMSVictory, kJMSID, @(gameId)];
     
     @try
     {

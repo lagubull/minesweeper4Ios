@@ -1,5 +1,5 @@
 //
-//  GameManager.m
+//  VersusGameManager.m
 //  minesweeper
 //
 //  Created by jlagunas on 12/04/13.
@@ -7,186 +7,245 @@
 //
 
 #import "VersusGameManager.h"
+
 #import "Tools.h"
-#import "DBManager.h" 
+#import "DBManager.h"
+#import "VersusGame.h"
+#import "VersusViewController.h"
 
 @implementation VersusGameManager
 
-int versusGameStatus = 0;
+#pragma mark - Getters
 
-@synthesize vvc;
-
-@synthesize vGame;
-
--(id) init
+- (VersusGame *)versusGame
 {
-    vGame = [[VersusGame alloc] initWithNumMines:60 numColumns:14 numRows:15];
- 
-  
+    if (!_versusGame)
+    {
+        _versusGame = [[VersusGame alloc] initWithNumMines:60
+                                                numColumns:14
+                                                   numRows:15];
+    }
     
-    return self;
+    return _versusGame;
 }
 
-- (void)initGame
+
+#pragma mark - Init
+
+- (void)setupGame
 {
-    [vvc loadBoard];
+    [self.versusViewController loadBoard];
     
-    if (vGame.gameInternalId.integerValue == -1)
+    if (self.versusGame.gameInternalId == -1)
     {
         //initialise the board
-        vGame.player = PLAYER_1;
+        self.versusGame.player = JMSPlayer1;
         
-        [vGame setupGame];
+        [self.versusGame setupGame];
     }
     else
     {
-       
-       [self restoreGameController];
+        [self restoreGameController];
     }
-    [vvc passTurn: vGame.player];
+    
+    [self.versusViewController passTurn:self.versusGame.player];
+    
     /*For test purposes*/
-  /*  for (int i = 0; i < _num_rows; i++)
-        for (int j = 0; j < _num_columns; j++)
-            [bvc paintCell: i*10+j +CONSTANT  title : [NSString stringWithFormat: @"%d",board[i][j] ] ];*/
+    /*  for (int i = 0; i < _num_rows; i++)
+     for (int j = 0; j < _num_columns; j++)
+     [bvc paintCell: i*10+j +CONSTANT  title : [NSString stringWithFormat: @"%d",board[i][j] ] ];*/
 }
 
-- (void)clickCell:(int)r
-           column:(int) c
+#pragma mark - ClickCell
+
+- (void)clickCell:(NSInteger)row
+           column:(NSInteger)column
 {
     //if cell had not been clicked before
-    if (vGame.visible[r][c]==0)
+    if (self.versusGame.visible[row][column] == 0)
     {
-       
-        if (vGame.board[r][c] != 9)
+        if (self.versusGame.board[row][column] != 9)
         {
             //reveal cell's content
-            vGame.visible[r][c]=vGame.player;
-            NSString *value;
-            value  = [NSString stringWithFormat: @"%d",vGame.board[r][c]] ;
-                       [vvc paintCell: (r * CONSTANT_ROW + c + CONSTANT_ROW) title :value];
+            self.versusGame.visible[row][column] = self.versusGame.player;
+            
+            NSString *value = [NSString stringWithFormat:@"%@", @(self.versusGame.board[row][column])];
+            
+            [self.versusViewController paintCell:(row * kJMSRow + column + kJMSRow)
+                                           title:value];
+            
             //if not near mines
-            if (vGame.board[r][c]==0)
+            if (self.versusGame.board[row][column]==0)
             {
                 //loop through the nearby cells and click them aswell
-                for (int r2= MAX(0,r-1);r2 < MIN(vGame.num_rows, r+2);r2++)
+                for (NSInteger row2 = MAX (0, (row - 1)); row2 < MIN (self.versusGame.rowsNumber, (row + 2)); row2++)
                 {
-                    for (int c2= MAX(0,c-1);c2 < MIN(vGame.num_columns,c+2);c2++)
+                    for (NSInteger column2 = MAX (0, (column - 1)); column2 < MIN(self.versusGame.columnsNumber, (column + 2)); column2++)
                     {
-                        [self clickCell: r2 column: c2];
+                        [self clickCell:row2
+                                 column:column2];
                     }
                 }
             }
-            
         }
     }
 }
 
--(void)passTurn:(int)cellId
+#pragma mark - CellSelected
+
+- (void)cellSelected:(NSInteger)cellID
 {
-    switch (vGame.player)
+    if (self.versusGame.lastCellPlayer1 == -1)
     {
-        case PLAYER_1:  vGame.player = PLAYER_2;
-                        self.vGame.last_cell_player1 = cellId;
-                        break;
-        case PLAYER_2:  vGame.player = PLAYER_1;
-                        self.vGame.last_cell_player2 = cellId;
-                        break;
+        [self.versusGame persist];
     }
-    [vvc passTurn: vGame.player];
+    
+    NSInteger *row;
+    NSInteger *column;
+    row = malloc(4);
+    column = malloc(4);
+    
+    [self.versusGame findCoordinatesWithPosition:cellID
+                                 row:row
+                              column:column];
+    
+    if (self.versusGame.visible[*row][*column] == 0)
+    {
+        if (self.versusGame.board[*row][*column] == 9)
+        {
+            self.versusGame.visible[*row][*column] = self.versusGame.player;
+            
+            [self.versusViewController paintMine:(*row * kJMSRow + *column + kJMSRow)
+                                          player:self.versusGame.player
+                                       animation:YES ];
+            
+            //mine
+            [self checkVictory];
+        }
+        else
+        {
+            //empty cell
+            [self clickCell:*row
+                     column:*column];
+            
+            [self passTurn:self.versusGame.player];
+        }
+        
+        [self.versusGame update];
+    }
 }
+
+#pragma mark - PassTurn
+
+-(void)passTurn:(NSInteger)cellId
+{
+    switch (self.versusGame.player)
+    {
+        case JMSPlayer1:
+        {
+            self.versusGame.player = JMSPlayer2;
+            self.versusGame.lastCellPlayer1 = cellId;
+            
+            break;
+        }
+        case JMSPlayer2:
+        {
+            self.versusGame.player = JMSPlayer1;
+            self.versusGame.lastCellPlayer2 = cellId;
+            
+            break;
+        }
+    }
+    
+    [self.versusViewController passTurn:self.versusGame.player];
+}
+
+#pragma mark - UpdateMinesCount
 
 - (void)updateMinesCount
 {
-    vGame.remainingMines--;
-    switch (vGame.player)
+    self.versusGame.remainingMines--;
+    
+    switch (self.versusGame.player)
     {
-        case PLAYER_1:  vGame.mines_player1++;
-                        break;
-        case PLAYER_2:  vGame.mines_player2++;
-                        break;
+        case JMSPlayer1:
+        {
+            self.versusGame.minesPlayer1++;
+            
+            break;
+        }
+        case JMSPlayer2:
+        {
+            self.versusGame.minesPlayer2++;
+            
+            break;
+        }
     }
-    [vvc updateMinesCounters];
+    
+    [self.versusViewController updateMinesCounters];
 }
+
+#pragma mark CheckVictory
 
 - (void)checkVictory
 {
     [self updateMinesCount];
     
-    if (vGame.mines_player1  >= vGame.num_mines/2)
+    if (self.versusGame.minesPlayer1  >= (self.versusGame.minesNumber / 2))
     {
         //Player 1 Victory
-
-        [Tools showSingleButtonAlert:NSLocalizedString(@"WINNER",@"Winner title") message:NSLocalizedString(@"YOU_WIN",@"Winner message") buttonText:NSLocalizedString(@"PLAY_AGAIN",@"Play again button") delegate:self];
+        
+        [Tools showSingleButtonAlert:NSLocalizedString(@"WINNER",@"Winner title")
+                             message:NSLocalizedString(@"YOU_WIN",@"Winner message")
+                          buttonText:NSLocalizedString(@"PLAY_AGAIN",@"Play again button")
+                            delegate:self];
     }
     else
     {
-        if (vGame.mines_player2  >= vGame.num_mines/2)
+        if (self.versusGame.minesPlayer2  >= (self.versusGame.minesNumber / 2))
         {
             //Player 2 Victory
-            [Tools showSingleButtonAlert:NSLocalizedString(@"WINNER",@"Winner title") message:NSLocalizedString(@"YOU_WIN",@"Winner message") buttonText:NSLocalizedString(@"PLAY_AGAIN",@"Play again button") delegate:self];
+            [Tools showSingleButtonAlert:NSLocalizedString(@"WINNER",@"Winner title")
+                                 message:NSLocalizedString(@"YOU_WIN",@"Winner message")
+                              buttonText:NSLocalizedString(@"PLAY_AGAIN",@"Play again button")
+                                delegate:self];
         }
-        
     }
 }
 
-- (void)cellSelected:(int)cellID
+#pragma mark - RestoreGameController
+
+-(void)restoreGameController
 {
-    if (vGame.last_cell_player1 == -1)
-        [vGame persist];
-    
-        int *r;
-        int *c;
-        r = malloc(4);
-        c = malloc(4);
-        [vGame findCoordinates: cellID  row: r column: c];
-        
-        if (vGame.visible[*r][*c] == 0)
-        {
-            if (vGame.board[*r][*c] == 9)
-            {
-                    vGame.visible[*r][*c]=vGame.player;
-                [vvc paintMine:(*r*CONSTANT_ROW + *c + CONSTANT_ROW) player: vGame.player animation:YES ];
-                    //mine
-                    [self checkVictory];
-            }
-            else
-            {
-                //empty cell
-                [self clickCell: *r column: *c ];
-                [self passTurn: vGame.player];
-            }
-            [vGame update];
-        }
-
-   }
-
-
-- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    [self initGame];
-}
-
--(void) restoreGameController
-{
-    for (int r = 0;r < vGame.num_rows;r++)
+    for (NSInteger row = 0; row < self.versusGame.rowsNumber; row++)
     {
-        for (int c = 0;c < vGame.num_columns;c++)
+        for (NSInteger column = 0; column < self.versusGame.columnsNumber; column++)
         {
-            if (vGame.visible[r][c] != 0)
+            if (self.versusGame.visible[row][column] != 0)
             {
-                if (vGame.board[r][c] != 9)
+                if (self.versusGame.board[row][column] != 9)
                 {
-                    NSString *value;
-                    value  = [NSString stringWithFormat: @"%d",vGame.board[r][c]] ;
-                    [vvc paintCell: (r * CONSTANT_ROW + c + CONSTANT_ROW) title :value];
+                    NSString *value = [NSString stringWithFormat:@"%@", @(self.versusGame.board[row][column])];
+                    
+                    [self.versusViewController paintCell:(row * kJMSRow + column + kJMSRow)
+                                                   title:value];
                 }
                 else
                 {
-                    [vvc paintMine:(r*CONSTANT_ROW + c + CONSTANT_ROW) player: vGame.visible[r][c] animation:NO];
+                    [self.versusViewController paintMine:(row * kJMSRow + column + kJMSRow)
+                                                  player:self.versusGame.visible[row][column]
+                                               animation:NO];
                 }
             }
-       }
+        }
     }
+}
+
+#pragma mark - AlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self setupGame];
 }
 
 @end

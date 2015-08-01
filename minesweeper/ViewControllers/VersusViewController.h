@@ -28,12 +28,20 @@
  */
 @property (nonatomic) CGFloat previousScale;
 
--(void) paintMine: (int) tag player: (int) player animation: (BOOL) animation;
--(void) paintCell: (int) tag title :(NSString *) title;
--(void) loadBoard;
--(void) updateMinesCounters;
--(void) passTurn: (int) player;
--(IBAction) showOptions: (id) sender;
+- (void) paintMine:(NSInteger)tag
+            player:(NSInteger)player
+         animation:(BOOL)animation;
+
+- (void)paintCell:(NSInteger)tag
+            title:(NSString *)title;
+
+- (void)loadBoard;
+
+- (void)updateMinesCounters;
+
+- (void)passTurn:(NSInteger)player;
+
+- (IBAction)showOptions:(id) sender;
 
 
 @end

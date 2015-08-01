@@ -6,36 +6,60 @@
 //  Copyright (c) 2013 Jlaguna. All rights reserved.
 //
 
-#import "DBManager.h"
+@class DBManager;
 
-#define CONSTANT_ROW 1000
+extern const NSInteger kJMSRow;
 
 @interface Game : NSObject
 
-@property (atomic, strong) NSNumber *gameInternalId;
-@property (atomic) int num_rows;
-@property (atomic) int num_columns;
-@property (atomic) int num_mines;
-@property (atomic) int remainingMines;
-@property (atomic) int **visible;
-@property (atomic) int **board;
-@property (atomic) int *mines;
-@property (nonatomic) int last_cell_player1;
-@property (nonatomic,strong) NSString *player1_username;
-@property (nonatomic) int victory;
-@property (nonatomic,strong) DBManager *manager;
-@property (nonatomic,strong) NSString *date_last_played;
+@property (nonatomic) NSInteger gameInternalId;
 
--(id) initWithNumMines: (int) numMines numColumns:  (int)numColumns  numRows: (int) numRows;
+@property (nonatomic) NSInteger rowsNumber;
 
--(void) setupGame;
--(void) restoreBoard;
--(void) findCoordinates: (int) position row : (int *) row column: (int  *)  column;
--(NSString *) serializeVisible;
--(void) deSerializeVisible: (NSString *) visibleString;
--(NSString *) serializeMines;
--(void) deSerializeMines: (NSString *) minesString;
--(void) persist;
--(void) update;
+@property (nonatomic) NSInteger columnsNumber;
+
+@property (nonatomic) NSInteger minesNumber;
+
+@property (nonatomic) NSInteger remainingMines;
+
+@property (nonatomic) NSInteger **visible;
+
+@property (nonatomic) NSInteger **board;
+
+@property (nonatomic) NSInteger *mines;
+
+@property (nonatomic) NSInteger lastCellPlayer1;
+
+@property (nonatomic, strong) NSString *player1Username;
+
+@property (nonatomic) NSInteger victory;
+
+@property (nonatomic, strong) DBManager *manager;
+
+@property (nonatomic, strong) NSString *dateLastPlayed;
+
+-(instancetype)initWithNumMines:(NSInteger)numMines
+                     numColumns:(NSInteger)numColumns
+                        numRows:(NSInteger)numRows;
+
+- (void)setupGame;
+
+- (void)restoreBoard;
+
+- (void)findCoordinatesWithPosition:(NSInteger)position
+                                row:(NSInteger *)row
+                             column:(NSInteger *)column;
+
+- (NSString *)serializeVisible;
+
+- (NSString *)serializeMines;
+
+- (void)deSerializeVisible:(NSString *) visibleString;
+
+- (void) deSerializeMines: (NSString *) minesString;
+
+- (void) persist;
+
+- (void) update;
 
 @end

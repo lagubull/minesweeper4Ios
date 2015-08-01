@@ -6,21 +6,16 @@
 //
 
 #import "Game.h"
+
 #import "Tools.h"
+#import "DBManager.h"
+
+/**
+ Constant to add to the cells tag
+ */
+const NSInteger kJMSRow = 1000;
 
 @implementation Game
-
-@synthesize num_rows;
-@synthesize num_columns;
-@synthesize num_mines;
-@synthesize board;
-@synthesize visible;
-@synthesize mines;
-@synthesize player1_username;
-@synthesize last_cell_player1;
-@synthesize victory;
-@synthesize manager;
-@synthesize remainingMines;
 
 #pragma mark - Init
 
@@ -41,46 +36,60 @@
                        newVersion:[[NSNumber alloc] initWithInteger:1]];
         }
         
-        self.gameInternalId = [[NSNumber alloc] initWithInteger:-1];
+        self.gameInternalId = -1;
     }
     
     return self;
 }
 
--(instancetype)initWithNumMines:(int)numMines numColumns:(int)numColumns  numRows:(int)numRows
+-(instancetype)initWithNumMines:(NSInteger)numMines
+                     numColumns:(NSInteger)numColumns
+                        numRows:(NSInteger)numRows
 {
     self = [self  init];
     
     if (self)
     {
-        self.num_columns = numColumns;
-        self.num_rows = numRows;
-        self.num_mines = numMines;
-        self.last_cell_player1 = -1;
-        self.player1_username = @"Player 1";
+        self.columnsNumber = numColumns;
+        self.rowsNumber = numRows;
+        self.minesNumber = numMines;
+        self.lastCellPlayer1 = -1;
+        self.player1Username = @"Player 1";
         self.victory = 0;
-        self.remainingMines = self.num_mines;
-        self.date_last_played = [Tools date2String: [NSDate date]];
+        self.remainingMines = self.minesNumber;
+        self.dateLastPlayed = [Tools date2String: [NSDate date]];
         
-        self.board = (int **)calloc(num_rows, sizeof(int *));
-        self.visible = (int **)calloc(num_rows, sizeof(int *));
-        self.mines = (int *)calloc(num_mines, sizeof(int *));
-        self.board[0] = (int *)calloc(num_rows * num_columns, sizeof(int *));
-        self.visible[0] = (int *)calloc(num_rows * num_columns, sizeof(int *));
+        self.board = (NSInteger **)calloc(self.rowsNumber,
+                                    sizeof(int *));
+        
+        self.visible = (NSInteger **)calloc(self.rowsNumber,
+                                      sizeof(NSInteger *));
+        
+        self.mines = (NSInteger *)calloc(self.minesNumber,
+                                   sizeof(NSInteger *));
+        
+        self.board[0] = (NSInteger *)calloc((self.rowsNumber * self.columnsNumber),
+                                      sizeof(NSInteger *));
+        
+        self.visible[0] = (NSInteger *)calloc((self.rowsNumber * self.columnsNumber),
+                                        sizeof(NSInteger *));
     }
     
     return self;
 }
 
+
+#pragma mark - Setup
+
 -(void)setupBoard
 {
-    for (int f=0;f < num_rows; f++)
+    for (int row = 0; row < self.rowsNumber; row++)
     {
-        self.board[f] = board[0] + f * num_columns;
+        self.board[row] = self.board[0] + row * self.columnsNumber;
         
-        for (int c=0; c < num_columns; c++)
+        for (int column = 0; column < self.columnsNumber; column++)
         {
-            self.board[f][c] = 0;
+            self.board[row][column] = 0;
         }
     }
 }
@@ -89,131 +98,167 @@
 {
     [self setupBoard];
     
-    for (int f=0; f < num_rows; f++)
+    for (int row = 0; row < self.rowsNumber; row++)
     {
-        self.visible[f] = visible[0] + f * num_columns;
+        self.visible[row] = self.visible[0] + row * self.columnsNumber;
         
-        for (int c=0; c < num_columns; c++)
+        for (int column = 0; column < self.columnsNumber; column++)
         {
-            self.visible[f][c] = 0;
+            self.visible[row][column] = 0;
         }
     }
     
     //Sets the mines on the board
-    for (int mine = 0; mine < num_mines; mine++)
+    for (NSInteger mine = 0; mine < self.minesNumber; mine++)
     {
         //finds a random postion where there is not a mine
-        int r,c;
+        NSInteger row, column;
         
         do
         {
-            r = (int)(arc4random() % num_rows);
-            c = (int)(arc4random() % num_columns);
+            row = (int)(arc4random() % self.rowsNumber);
+            column = (int)(arc4random() % self.columnsNumber);
         }
-        while(self.board[r][c] == 9);
+        while(self.board[row][column] == 9);
         
         //sets the mine
-        self.board[r][c] = 9;
-        self.mines[mine] = r  * CONSTANT_ROW + c + CONSTANT_ROW;
+        self.board[row][column] = 9;
+        self.mines[mine] = (int)(row  * kJMSRow + column + kJMSRow);
         
-        [self calculateMineDistances:r :c ];
+        [self calculateMineDistances:row
+                              column:column];
     }
 }
 
-- (NSString *)serializeVisible
-{
-    NSString *visibleString = @"";
-    for (int i = 0; i < num_rows ; i++)
-    {
-        for (int j = 0; j < num_columns ; j++)
-        {
-            visibleString = [visibleString  stringByAppendingString:[NSString stringWithFormat: @"%d;", visible[i][j]]];
-        }
-      
-    }
-    return visibleString;
-}
+#pragma mark - CalculateMineDistances
 
-- (void)deSerializeVisible:(NSString *)visibleString
-{
-    NSArray* _visible = [visibleString  componentsSeparatedByString:@";"];
-    
-    int cont = 0;
-        
-    for (int i = 0; i < num_rows ; i++)
-    {
-        self.visible[i] = visible[0] + i * num_columns;
-        for (int j = 0; j < num_columns ; j++)
-        {
-            self.visible[i][j] = [_visible[cont++] integerValue];
-        }
-    }    
-}
-
-- (NSString *)serializeMines
-{
-    NSString *minesString = @"";
-    
-    for (int i = 0; i < num_mines; i++)
-    {
-        minesString = [minesString  stringByAppendingString:[NSString stringWithFormat: @"%d;", mines[i]]];
-    }
-    return minesString;
-}
-
-- (void) deSerializeMines:(NSString *) minesString
-{
-    NSArray* _mines = [minesString  componentsSeparatedByString:@";"];
-    int cont = 0;
-    
-    for (int i = 0; i < num_mines ; i++)
-    {
-        self.mines[i] = [_mines[cont++] integerValue];
-    }
-}
-
-- (void)calculateMineDistances:(int)row :(int)column
+- (void)calculateMineDistances:(NSInteger)row
+                        column:(NSInteger)column
 {
     //goes around the mine and increases the counters
-    for (int r2 = MAX(0, row-1); r2 < MIN(num_rows,row+2); r2++)
+    for (NSInteger row2 = MAX (0, (row - 1)); row2 < MIN (self.rowsNumber, (row + 2)); row2++)
     {
-        for (int c2 = MAX(0,column-1); c2 < MIN(num_columns, column+2); c2++)
+        for (NSInteger column2 = MAX (0, (column - 1)); column2 < MIN (self.columnsNumber, (column + 2)); column2++)
         {
-            if (board[r2][c2]!=9)
-            {   //if not a mine
-                self.board[r2][c2]++; //increases the counter
+            if (self.board[row2][column2] != 9)
+            {
+                //if not a mine
+                self.board[row2][column2]++; //increases the counter
             }
         }
     }
 }
 
+#pragma mark - RestoreBoard
+
 - (void)restoreBoard
 {
-    int *r;
-    int *c;
-    r = malloc(4);
-    c = malloc(4);
+    NSInteger *row;
+    NSInteger *column;
+    row = malloc(4);
+    column = malloc(4);
     
     [self setupBoard];
     
-    for (int i = 0; i < num_mines; i++ )
+    for (NSInteger i = 0; i < self.minesNumber; i++ )
     {
-        [self findCoordinates: mines[i] row: r column: c];
-        board[*r][*c] = 9;
-        [self calculateMineDistances :*r :*c];
+        [self findCoordinatesWithPosition:self.mines[i]
+                          row:row
+                       column:column];
         
-        if (visible [*r][*c] > 0)
+        self.board[*row][*column] = 9;
+        
+        [self calculateMineDistances:*row
+                              column:*column];
+        
+        if (self.visible [*row][*column] > 0)
         {
-            remainingMines--;
+            self.remainingMines = self.remainingMines - 1;
         }
     }
 }
 
-- (void) findCoordinates:(int)position row:(int *)row column:(int *)column
+#pragma mark - Serialization
+
+- (NSString *)serializeMines
 {
-    position = position - CONSTANT_ROW;
-    *column = position % CONSTANT_ROW;
-    *row =  (position - *column) / CONSTANT_ROW;
+    NSString *minesString = @"";
+    
+    for (int i = 0; i < self.minesNumber; i++)
+    {
+        minesString = [minesString  stringByAppendingString:[NSString stringWithFormat:@"%@;",@(self.mines[i])]];
+    }
+    
+    return minesString;
+}
+
+- (NSString *)serializeVisible
+{
+    NSString *visibleString = @"";
+    
+    for (NSInteger i = 0; i < self.rowsNumber; i++)
+    {
+        for (NSInteger j = 0; j < self.columnsNumber; j++)
+        {
+            visibleString = [visibleString  stringByAppendingString:[NSString stringWithFormat:@"%@;", @(self.visible[i][j])]];
+        }
+        
+    }
+    
+    return visibleString;
+}
+
+- (void)deSerializeVisible:(NSString *)visibleString
+{
+    NSArray* visible = [visibleString  componentsSeparatedByString:@";"];
+    
+    int cont = 0;
+    
+    for (int i = 0; i < self.rowsNumber; i++)
+    {
+        self.visible[i] = self.visible[0] + i * self.columnsNumber;
+        
+        for (int j = 0; j < self.columnsNumber; j++)
+        {
+            self.visible[i][j] = [visible[cont++] intValue];
+        }
+    }
+}
+
+- (void)deSerializeMines:(NSString *)minesString
+{
+    NSArray* mines = [minesString componentsSeparatedByString:@";"];
+    int cont = 0;
+    
+    for (int i = 0; i < self.minesNumber ; i++)
+    {
+        self.mines[i] = [mines[cont++] intValue];
+    }
+}
+
+#pragma mark - FindCoordinatesWithPosition
+
+- (void)findCoordinatesWithPosition:(NSInteger)position
+                    row:(NSInteger *)row
+                 column:(NSInteger *)column
+{
+    position = position - kJMSRow;
+    *column = position % kJMSRow;
+    *row =  (position - *column) / kJMSRow;
+}
+
+#pragma mark - Update
+
+- (void)update
+{
+    //asbtract
+}
+
+#pragma mark - persist
+
+- (void)persist
+{
+    //abstract
 }
 
 @end

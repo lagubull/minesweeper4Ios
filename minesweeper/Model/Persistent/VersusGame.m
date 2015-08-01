@@ -8,29 +8,25 @@
 
 #import "VersusGame.h"
 
-@implementation VersusGame
+#import "DBManager.h"
 
-@synthesize player2_username;
-@synthesize last_cell_player2;
-@synthesize mines_player1;
-@synthesize mines_player2;
-@synthesize player;
+@implementation VersusGame
 
 #pragma mark - Init
 
-- (instancetype)initWithNumMines:(int)numMines
-                      numColumns:(int)numColumns
-                         numRows:(int)numRows
+-(instancetype)initWithNumMines:(NSInteger)numMines
+                     numColumns:(NSInteger)numColumns
+                        numRows:(NSInteger)numRows
 {
     self = [super initWithNumMines:numMines numColumns:numColumns numRows:numRows];
     
     if (self)
     {
-        self.last_cell_player2 = -1;
+        self.lastCellPlayer2 = -1;
         self.player = 1;
-        self.player2_username = @"Player 2";
-        self.mines_player1 = 0;
-        self.mines_player2 = 0;
+        self.player2Username = @"Player 2";
+        self.minesPlayer1 = 0;
+        self.minesPlayer2 = 0;
     }
     
     return self;
@@ -49,25 +45,26 @@
 {
     [self restoreBoard];
     
-    int *r;
-    int *c;
-    r = malloc(4);
-    c = malloc(4);
+    NSInteger *row;
+    NSInteger *column;
+    row = malloc(4);
+    column = malloc(4);
     
-    for (int i = 0; i < self.num_mines; i++)
+    for (NSInteger i = 0; i < self.minesNumber; i++)
     {
-        [self findCoordinates:self.mines[i] row:r column:c];
+        [self findCoordinatesWithPosition:self.mines[i]
+                                       row:row
+                                   column:column];
         
-        if (self.visible [*r][*c] == 1)
+        if (self.visible [*row][*column] == 1)
         {
-            mines_player1++;
+            self.minesPlayer1++;
         }
-        else if (self.visible [*r][*c] == 2)
+        else if (self.visible [*row][*column] == 2)
         {
-            mines_player2++;
+            self.minesPlayer2++;
         }
     }
-    
 }
 
 #pragma mark - Persist

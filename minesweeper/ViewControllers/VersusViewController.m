@@ -78,7 +78,7 @@
     self.lblRemainingMines.text = NSLocalizedString(@"MINES_LEFT", @"Remaining mines");
     
     [Tools versionedScaleFactor:self.lblRemainingMines
-                         factor:0.7
+                         factor:0.7f
                            size:15];
     
     [Tools versionedTextAlignment:self.lblRemainingMines
@@ -88,7 +88,7 @@
                                                             NSLocalizedString(@"PLAYER_1", @"Player 1 text")] UTF8String]];
     
     [Tools versionedScaleFactor:self.lblPlayer1
-                         factor:0.7
+                         factor:0.7f
                            size:15];
     
     [Tools versionedTextAlignment:self.lblPlayer1
@@ -98,7 +98,7 @@
                                                             NSLocalizedString(@"PLAYER_2",@"Player 2 text")] UTF8String]];
     
     [Tools versionedScaleFactor:self.lblPlayer2
-                         factor:0.7
+                         factor:0.7f
                            size:15];
     
     [Tools versionedTextAlignment:self.lblPlayer2
@@ -492,20 +492,20 @@
         case JMSPlayer1:
         {
             self.lblPlayer1.layer.borderColor = [UIColor redColor].CGColor;
-            self.lblPlayer1.layer.borderWidth = 2;
+            self.lblPlayer1.layer.borderWidth = 2.0f;
             
             self.lblPlayer2.layer.borderColor = [UIColor clearColor].CGColor;
-            self.lblPlayer2.layer.borderWidth = 0;
+            self.lblPlayer2.layer.borderWidth = 0.0f;
             
             break;
         }
         case JMSPlayer2:
         {
             self.lblPlayer2.layer.borderColor = [UIColor redColor].CGColor;
-            self.lblPlayer2.layer.borderWidth = 2;
+            self.lblPlayer2.layer.borderWidth = 2.0f;
             
             self.lblPlayer1.layer.borderColor = [UIColor clearColor].CGColor;
-            self.lblPlayer1.layer.borderWidth = 0;
+            self.lblPlayer1.layer.borderWidth = 0.0f;
             
             break;
         }

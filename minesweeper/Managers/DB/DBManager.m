@@ -17,7 +17,6 @@
  */
 const NSInteger kJMSRestorableGames = 10;
 
-
 /**
  TAG NSString to distinguish database
  */

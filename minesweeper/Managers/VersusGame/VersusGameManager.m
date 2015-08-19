@@ -22,8 +22,8 @@
     if (!_versusGame)
     {
         _versusGame = [[VersusGame alloc] initWithNumMines:60
-                                                numColumns:14
-                                                   numRows:15];
+                                                numColumns:11
+                                                   numRows:14];
     }
     
     return _versusGame;

@@ -19,7 +19,7 @@ const NSInteger kJMSRow = 1000;
 
 #pragma mark - Init
 
--(instancetype)init
+- (instancetype)init
 {
     self = [super init];
     
@@ -42,7 +42,7 @@ const NSInteger kJMSRow = 1000;
     return self;
 }
 
--(instancetype)initWithNumMines:(NSInteger)numMines
+- (instancetype)initWithNumMines:(NSInteger)numMines
                      numColumns:(NSInteger)numColumns
                         numRows:(NSInteger)numRows
 {
@@ -81,7 +81,7 @@ const NSInteger kJMSRow = 1000;
 
 #pragma mark - Setup
 
--(void)setupBoard
+- (void)setupBoard
 {
     for (int row = 0; row < self.rowsNumber; row++)
     {

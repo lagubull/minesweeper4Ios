@@ -7,7 +7,7 @@
 
 #import "Game.h"
 
-#import "Tools.h"
+#import "JCTTools.h"
 #import "DBManager.h"
 
 /**
@@ -57,7 +57,7 @@ const NSInteger kJMSRow = 1000;
         self.player1Username = @"Player 1";
         self.victory = 0;
         self.remainingMines = self.minesNumber;
-        self.dateLastPlayed = [Tools date2String:[NSDate date]];
+        self.dateLastPlayed = [JCTTools date2String:[NSDate date]];
         
         self.board = (NSInteger **)calloc(self.rowsNumber,
                                     sizeof(NSInteger *));

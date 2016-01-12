@@ -24,7 +24,6 @@
 		3BD483D51B6954520026BDBD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483B31B6954520026BDBD /* main.m */; };
 		3BD483D61B6954520026BDBD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BD483B41B6954520026BDBD /* MainStoryboard.storyboard */; };
 		3BD483D71B6954520026BDBD /* minesweeper-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD483B51B6954520026BDBD /* minesweeper-Info.plist */; };
-		3BD483D81B6954520026BDBD /* Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483B91B6954520026BDBD /* Tools.m */; };
 		3BD483D91B6954520026BDBD /* VersusGameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483BE1B6954520026BDBD /* VersusGameCell.m */; };
 		3BD483DA1B6954520026BDBD /* VersusGameTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483C01B6954520026BDBD /* VersusGameTableViewController.m */; };
 		3BD483DB1B6954520026BDBD /* VersusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483C21B6954520026BDBD /* VersusViewController.m */; };
@@ -62,8 +61,6 @@
 		3BD483B41B6954520026BDBD /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		3BD483B51B6954520026BDBD /* minesweeper-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "minesweeper-Info.plist"; sourceTree = "<group>"; };
 		3BD483B61B6954520026BDBD /* minesweeper-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "minesweeper-Prefix.pch"; sourceTree = "<group>"; };
-		3BD483B81B6954520026BDBD /* Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tools.h; sourceTree = "<group>"; };
-		3BD483B91B6954520026BDBD /* Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tools.m; sourceTree = "<group>"; };
 		3BD483BD1B6954520026BDBD /* VersusGameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersusGameCell.h; sourceTree = "<group>"; };
 		3BD483BE1B6954520026BDBD /* VersusGameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersusGameCell.m; sourceTree = "<group>"; };
 		3BD483BF1B6954520026BDBD /* VersusGameTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersusGameTableViewController.h; sourceTree = "<group>"; };
@@ -192,15 +189,6 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
-		3BD483B71B6954520026BDBD /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				3BD483B81B6954520026BDBD /* Tools.h */,
-				3BD483B91B6954520026BDBD /* Tools.m */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
 		3BD483BA1B6954520026BDBD /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -287,7 +275,6 @@
 				3BD483A01B6954520026BDBD /* Model */,
 				3BD483A71B6954520026BDBD /* Resources */,
 				3BD483B21B6954520026BDBD /* SupportingFiles */,
-				3BD483B71B6954520026BDBD /* Utilities */,
 				3BD483BA1B6954520026BDBD /* ViewControllers */,
 				3BD483C31B6954520026BDBD /* Views */,
 			);
@@ -427,7 +414,6 @@
 			files = (
 				3BD483DC1B6954520026BDBD /* MATCGlossyButton.m in Sources */,
 				3BD483DB1B6954520026BDBD /* VersusViewController.m in Sources */,
-				3BD483D81B6954520026BDBD /* Tools.m in Sources */,
 				3BD483CB1B6954520026BDBD /* VersusGame.m in Sources */,
 				3BD483C71B6954520026BDBD /* AppDelegate.m in Sources */,
 				3BD483C81B6954520026BDBD /* DBManager.m in Sources */,

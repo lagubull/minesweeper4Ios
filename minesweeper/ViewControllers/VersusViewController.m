@@ -9,7 +9,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "Tools.h"
+#import "JCTTools.h"
 #import "VersusGameManager.h"
 #import "MATCGlossyButton.h"
 #import "VersusGame.h"
@@ -77,34 +77,33 @@
 {
     self.lblRemainingMines.text = NSLocalizedString(@"MINES_LEFT", @"Remaining mines");
     
-    [Tools versionedScaleFactor:self.lblRemainingMines
-                         factor:0.7f
-                           size:15];
+    [JCTTools versionedScaleFactor:self.lblRemainingMines
+                            factor:0.7f
+                              size:15];
     
-    [Tools versionedTextAlignment:self.lblRemainingMines
-                        alignment:NSTextAlignmentCenter];
+    [JCTTools versionedTextAlignment:self.lblRemainingMines
+                           alignment:NSTextAlignmentCenter];
     
     self.lblPlayer1.text = [NSString stringWithUTF8String:[[NSString stringWithFormat:@" %@:",
                                                             NSLocalizedString(@"PLAYER_1", @"Player 1 text")] UTF8String]];
     
-    [Tools versionedScaleFactor:self.lblPlayer1
-                         factor:0.7f
-                           size:15];
+    [JCTTools versionedScaleFactor:self.lblPlayer1
+                            factor:0.7f
+                              size:15];
     
-    [Tools versionedTextAlignment:self.lblPlayer1
-                        alignment:NSTextAlignmentLeft];
+    [JCTTools versionedTextAlignment:self.lblPlayer1
+                           alignment:NSTextAlignmentLeft];
     
     self.lblPlayer2.text = [NSString stringWithUTF8String:[[NSString stringWithFormat: @" %@:",
                                                             NSLocalizedString(@"PLAYER_2",@"Player 2 text")] UTF8String]];
     
-    [Tools versionedScaleFactor:self.lblPlayer2
-                         factor:0.7f
-                           size:15];
+    [JCTTools versionedScaleFactor:self.lblPlayer2
+                            factor:0.7f
+                              size:15];
     
-    [Tools versionedTextAlignment:self.lblPlayer2
-                        alignment:NSTextAlignmentLeft];
+    [JCTTools versionedTextAlignment:self.lblPlayer2
+                           alignment:NSTextAlignmentLeft];
 }
-
 
 #pragma mark - Getters
 
@@ -309,9 +308,9 @@
                                                                      self.cellHeight)];
     
     UIImageView *flag = [[UIImageView alloc] initWithFrame:CGRectMake((self.cellWidth / 2 - 4),
-                                                                       (3 / 4 * self.cellHeight),
-                                                                       self.cellWidth / 2,
-                                                                       self.cellHeight)];
+                                                                      (3 / 4 * self.cellHeight),
+                                                                      self.cellWidth / 2,
+                                                                      self.cellHeight)];
     
     switch (player)
     {
@@ -387,37 +386,37 @@
 
 #pragma mark - UpdateMinesCounters
 
--(void)updateMinesCounters
+- (void)updateMinesCounters
 {
     self.lblPlayer1Mines.text = [NSString stringWithFormat:@"%@", @(self.versusGameManager.versusGame.minesPlayer1)];
     
-    [Tools versionedScaleFactor:self.lblPlayer1Mines
+    [JCTTools versionedScaleFactor:self.lblPlayer1Mines
                          factor:0.7
                            size:15];
     
-    [Tools versionedTextAlignment:self.lblPlayer1Mines
+    [JCTTools versionedTextAlignment:self.lblPlayer1Mines
                         alignment:NSTextAlignmentCenter];
     
     /*-----------*/
     
     self.lblPlayer2Mines.text = [NSString stringWithFormat:@"%@", @(self.versusGameManager.versusGame.minesPlayer2)];
     
-    [Tools versionedScaleFactor:self.lblPlayer2Mines
+    [JCTTools versionedScaleFactor:self.lblPlayer2Mines
                          factor:0.7
                            size:15];
     
-    [Tools versionedTextAlignment:self.lblPlayer2Mines
+    [JCTTools versionedTextAlignment:self.lblPlayer2Mines
                         alignment:NSTextAlignmentCenter];
     
     /*-----------*/
     
     self.lblMines.text = [NSString stringWithFormat:@"%@", @(self.versusGameManager.versusGame.remainingMines)];
     
-    [Tools versionedScaleFactor:self.lblMines
+    [JCTTools versionedScaleFactor:self.lblMines
                          factor:0.7
                            size:15];
     
-    [Tools versionedTextAlignment:self.lblMines
+    [JCTTools versionedTextAlignment:self.lblMines
                         alignment:NSTextAlignmentCenter];
 }
 
@@ -558,7 +557,7 @@
 #pragma mark - UIResponder
 
 - (BOOL)canPerformAction:(SEL)action
-             withSender:(id)sender
+              withSender:(id)sender
 {
     [self.bodyTextView resignFirstResponder];
     

@@ -7,7 +7,7 @@
 
 #import "Game.h"
 
-#import "Tools.h"
+#import "JCTTools.h"
 #import "DBManager.h"
 
 /**
@@ -19,7 +19,7 @@ const NSInteger kJMSRow = 1000;
 
 #pragma mark - Init
 
--(instancetype)init
+- (instancetype)init
 {
     self = [super init];
     
@@ -42,7 +42,7 @@ const NSInteger kJMSRow = 1000;
     return self;
 }
 
--(instancetype)initWithNumMines:(NSInteger)numMines
+- (instancetype)initWithNumMines:(NSInteger)numMines
                      numColumns:(NSInteger)numColumns
                         numRows:(NSInteger)numRows
 {
@@ -57,7 +57,7 @@ const NSInteger kJMSRow = 1000;
         self.player1Username = @"Player 1";
         self.victory = 0;
         self.remainingMines = self.minesNumber;
-        self.dateLastPlayed = [Tools date2String:[NSDate date]];
+        self.dateLastPlayed = [JCTTools date2String:[NSDate date]];
         
         self.board = (NSInteger **)calloc(self.rowsNumber,
                                     sizeof(NSInteger *));
@@ -81,7 +81,7 @@ const NSInteger kJMSRow = 1000;
 
 #pragma mark - Setup
 
--(void)setupBoard
+- (void)setupBoard
 {
     for (int row = 0; row < self.rowsNumber; row++)
     {

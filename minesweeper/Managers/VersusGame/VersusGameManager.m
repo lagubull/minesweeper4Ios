@@ -8,7 +8,7 @@
 
 #import "VersusGameManager.h"
 
-#import "Tools.h"
+#import "JCTTools.h"
 #import "DBManager.h"
 #import "VersusGame.h"
 #import "VersusViewController.h"
@@ -132,7 +132,7 @@
 
 #pragma mark - PassTurn
 
--(void)passTurn:(NSInteger)cellId
+- (void)passTurn:(NSInteger)cellId
 {
     switch (self.versusGame.player)
     {
@@ -190,27 +190,27 @@
     {
         //Player 1 Victory
         
-        [Tools showSingleButtonAlert:NSLocalizedString(@"WINNER",@"Winner title")
-                             message:NSLocalizedString(@"YOU_WIN",@"Winner message")
-                          buttonText:NSLocalizedString(@"PLAY_AGAIN",@"Play again button")
-                            delegate:self];
+        [JCTTools showSingleButtonAlert:NSLocalizedString(@"WINNER",@"Winner title")
+                                message:NSLocalizedString(@"YOU_WIN",@"Winner message")
+                             buttonText:NSLocalizedString(@"PLAY_AGAIN",@"Play again button")
+                   parentViewController:self];
     }
     else
     {
         if (self.versusGame.minesPlayer2  >= (self.versusGame.minesNumber / 2))
         {
             //Player 2 Victory
-            [Tools showSingleButtonAlert:NSLocalizedString(@"WINNER",@"Winner title")
-                                 message:NSLocalizedString(@"YOU_WIN",@"Winner message")
-                              buttonText:NSLocalizedString(@"PLAY_AGAIN",@"Play again button")
-                                delegate:self];
+            [JCTTools showSingleButtonAlert:NSLocalizedString(@"WINNER",@"Winner title")
+                                    message:NSLocalizedString(@"YOU_WIN",@"Winner message")
+                                 buttonText:NSLocalizedString(@"PLAY_AGAIN",@"Play again button")
+                       parentViewController:self];
         }
     }
 }
 
 #pragma mark - RestoreGameController
 
--(void)restoreGameController
+- (void)restoreGameController
 {
     for (NSInteger row = 0; row < self.versusGame.rowsNumber; row++)
     {

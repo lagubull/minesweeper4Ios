@@ -24,7 +24,6 @@
 		3BD483D51B6954520026BDBD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483B31B6954520026BDBD /* main.m */; };
 		3BD483D61B6954520026BDBD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3BD483B41B6954520026BDBD /* MainStoryboard.storyboard */; };
 		3BD483D71B6954520026BDBD /* minesweeper-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD483B51B6954520026BDBD /* minesweeper-Info.plist */; };
-		3BD483D81B6954520026BDBD /* Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483B91B6954520026BDBD /* Tools.m */; };
 		3BD483D91B6954520026BDBD /* VersusGameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483BE1B6954520026BDBD /* VersusGameCell.m */; };
 		3BD483DA1B6954520026BDBD /* VersusGameTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483C01B6954520026BDBD /* VersusGameTableViewController.m */; };
 		3BD483DB1B6954520026BDBD /* VersusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3BD483C21B6954520026BDBD /* VersusViewController.m */; };
@@ -35,6 +34,7 @@
 		84C48715182A644E00C96EF5 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C48714182A644E00C96EF5 /* libsqlite3.0.dylib */; };
 		84C48723182A67DE00C96EF5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C48722182A67DE00C96EF5 /* QuartzCore.framework */; };
 		84C48725182A67F500C96EF5 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C48724182A67F500C96EF5 /* CoreMotion.framework */; };
+		9AB98D9D8F72ABC76EA4EB97 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F4BAD0ABA0F0322C3DB0B26 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,8 +61,6 @@
 		3BD483B41B6954520026BDBD /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		3BD483B51B6954520026BDBD /* minesweeper-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "minesweeper-Info.plist"; sourceTree = "<group>"; };
 		3BD483B61B6954520026BDBD /* minesweeper-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "minesweeper-Prefix.pch"; sourceTree = "<group>"; };
-		3BD483B81B6954520026BDBD /* Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tools.h; sourceTree = "<group>"; };
-		3BD483B91B6954520026BDBD /* Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tools.m; sourceTree = "<group>"; };
 		3BD483BD1B6954520026BDBD /* VersusGameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersusGameCell.h; sourceTree = "<group>"; };
 		3BD483BE1B6954520026BDBD /* VersusGameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersusGameCell.m; sourceTree = "<group>"; };
 		3BD483BF1B6954520026BDBD /* VersusGameTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersusGameTableViewController.h; sourceTree = "<group>"; };
@@ -71,6 +69,7 @@
 		3BD483C21B6954520026BDBD /* VersusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersusViewController.m; sourceTree = "<group>"; };
 		3BD483C51B6954520026BDBD /* MATCGlossyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MATCGlossyButton.h; sourceTree = "<group>"; };
 		3BD483C61B6954520026BDBD /* MATCGlossyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MATCGlossyButton.m; sourceTree = "<group>"; };
+		3F61151045CB5D4A27D13A1E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		84C486D3182A4F9900C96EF5 /* minesweeper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = minesweeper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C486D6182A4F9900C96EF5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		84C486D8182A4F9900C96EF5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -78,6 +77,8 @@
 		84C48714182A644E00C96EF5 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		84C48722182A67DE00C96EF5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		84C48724182A67F500C96EF5 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		8F4BAD0ABA0F0322C3DB0B26 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC259E6C4C05899D82F8F626 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +92,7 @@
 				84C486D7182A4F9900C96EF5 /* UIKit.framework in Frameworks */,
 				84C486D9182A4F9900C96EF5 /* Foundation.framework in Frameworks */,
 				84C486DB182A4F9900C96EF5 /* CoreGraphics.framework in Frameworks */,
+				9AB98D9D8F72ABC76EA4EB97 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,15 +189,6 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
-		3BD483B71B6954520026BDBD /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				3BD483B81B6954520026BDBD /* Tools.h */,
-				3BD483B91B6954520026BDBD /* Tools.m */,
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
 		3BD483BA1B6954520026BDBD /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +241,7 @@
 				84C486DC182A4F9900C96EF5 /* minesweeper */,
 				84C486D5182A4F9900C96EF5 /* Frameworks */,
 				84C486D4182A4F9900C96EF5 /* Products */,
+				F2757EA6B87C17854B5492CF /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -268,6 +262,7 @@
 				84C486D6182A4F9900C96EF5 /* UIKit.framework */,
 				84C486D8182A4F9900C96EF5 /* Foundation.framework */,
 				84C486DA182A4F9900C96EF5 /* CoreGraphics.framework */,
+				8F4BAD0ABA0F0322C3DB0B26 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -280,11 +275,19 @@
 				3BD483A01B6954520026BDBD /* Model */,
 				3BD483A71B6954520026BDBD /* Resources */,
 				3BD483B21B6954520026BDBD /* SupportingFiles */,
-				3BD483B71B6954520026BDBD /* Utilities */,
 				3BD483BA1B6954520026BDBD /* ViewControllers */,
 				3BD483C31B6954520026BDBD /* Views */,
 			);
 			path = minesweeper;
+			sourceTree = "<group>";
+		};
+		F2757EA6B87C17854B5492CF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3F61151045CB5D4A27D13A1E /* Pods.debug.xcconfig */,
+				DC259E6C4C05899D82F8F626 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -294,9 +297,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84C486F0182A4F9900C96EF5 /* Build configuration list for PBXNativeTarget "minesweeper" */;
 			buildPhases = (
+				30FC08F919A1E25AD968B22A /* Check Pods Manifest.lock */,
 				84C486CF182A4F9900C96EF5 /* Sources */,
 				84C486D0182A4F9900C96EF5 /* Frameworks */,
 				84C486D1182A4F9900C96EF5 /* Resources */,
+				3F69E85AE9D5A6791EF286BA /* Embed Pods Frameworks */,
+				627DE486E1E887A7D6FFC76E /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -353,6 +359,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		30FC08F919A1E25AD968B22A /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		3F69E85AE9D5A6791EF286BA /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		627DE486E1E887A7D6FFC76E /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		84C486CF182A4F9900C96EF5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -360,7 +414,6 @@
 			files = (
 				3BD483DC1B6954520026BDBD /* MATCGlossyButton.m in Sources */,
 				3BD483DB1B6954520026BDBD /* VersusViewController.m in Sources */,
-				3BD483D81B6954520026BDBD /* Tools.m in Sources */,
 				3BD483CB1B6954520026BDBD /* VersusGame.m in Sources */,
 				3BD483C71B6954520026BDBD /* AppDelegate.m in Sources */,
 				3BD483C81B6954520026BDBD /* DBManager.m in Sources */,
@@ -444,6 +497,7 @@
 		};
 		84C486F1182A4F9900C96EF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3F61151045CB5D4A27D13A1E /* Pods.debug.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -459,6 +513,7 @@
 		};
 		84C486F2182A4F9900C96EF5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DC259E6C4C05899D82F8F626 /* Pods.release.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

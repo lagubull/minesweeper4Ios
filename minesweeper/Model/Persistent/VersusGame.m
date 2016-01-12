@@ -14,7 +14,7 @@
 
 #pragma mark - Init
 
--(instancetype)initWithNumMines:(NSInteger)numMines
+- (instancetype)initWithNumMines:(NSInteger)numMines
                      numColumns:(NSInteger)numColumns
                         numRows:(NSInteger)numRows
 {
